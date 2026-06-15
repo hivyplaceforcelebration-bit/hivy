@@ -1,0 +1,46 @@
+---
+import { siteConfig, navigation } from '@/lib/config';
+import MobileMenu from './MobileMenu';
+---
+
+<header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <nav class="mx-auto max-w-7xl px-5 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3" aria-label="HIVY — Home">
+      <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-sm shadow-md">
+        H
+      </div>
+      <span class="text-base font-semibold text-foreground tracking-tight font-serif hidden sm:block">
+        HIVY <span class="text-primary">Surat</span>
+      </span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-1">
+      {navigation.map((item) => (
+        <a href={item.href} class="px-3 py-2 text-sm text-muted hover:text-foreground rounded-lg hover:bg-surface-light transition-colors">
+          {item.name}
+        </a>
+      ))}
+      <a href={`tel:${siteConfig.phone}`}
+         class="ml-3 px-5 py-2 text-sm font-semibold text-white bg-primary hover:bg-primary-dark rounded-xl transition-colors shadow-sm">
+        {siteConfig.phone}
+      </a>
+    </div>
+
+    <MobileMenu client:load navigation={navigation} phone={siteConfig.phone} brandName="HIVY" primaryColor="#92400e" />
+  </nav>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const update = () => {
+    if (window.scrollY > 10) {
+      header?.classList.add('bg-white/95','backdrop-blur-xl','border-b','border-border','shadow-sm');
+      header?.classList.remove('bg-transparent');
+    } else {
+      header?.classList.remove('bg-white/95','backdrop-blur-xl','border-b','border-border','shadow-sm');
+      header?.classList.add('bg-transparent');
+    }
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+</script>

@@ -1,0 +1,388 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import WhatsAppFloat from '@/components/WhatsAppFloat.astro';
+import BookingForm from '@/components/BookingForm';
+import { siteConfig, packages, serviceCategories } from '@/lib/config';
+
+const reviews = [
+  { name: 'Priya Shah', rating: 5, date: '2024-03-10', text: 'Booked the Swing of Love package for our anniversary — the setup was beyond beautiful. Every detail was perfect and the staff was so attentive!', occasion: 'Anniversary' },
+  { name: 'Rahul & Neha', rating: 5, date: '2024-02-14', text: 'HIVY made our Valentine\'s celebration truly magical. The fairy lights and floral setup created the most romantic atmosphere we\'ve ever experienced in Surat.', occasion: 'Valentine\'s Day' },
+  { name: 'Akash Patel', rating: 5, date: '2024-01-25', text: 'Surprised my girlfriend with a Fairy Tale Proposal here. She said YES! The team helped plan every little detail. Highly recommend for proposals in Surat!', occasion: 'Proposal' },
+  { name: 'Meera Desai', rating: 5, date: '2024-03-05', text: 'Birthday celebration for my husband — the BoHo Chic setup was stunning. Candles everywhere, flower arrangements, cake, everything was arranged so professionally.', occasion: 'Birthday' },
+  { name: 'Kiran Joshi', rating: 5, date: '2024-02-20', text: 'The Elite Group Setup for our pre-wedding photoshoot was exactly what we imagined. The Tent of Romance backdrop looked incredible in photos. Worth every penny!', occasion: 'Pre-Wedding' },
+  { name: 'Pooja & Vivek', rating: 5, date: '2024-01-15', text: 'We celebrated our 5th anniversary at HIVY Surat. The intimate setup, the warm service, and the personal touches made it an unforgettable evening. Thank you!', occasion: 'Anniversary' },
+];
+
+const steps = [
+  { num: '01', title: 'Choose Your Package', desc: 'Browse our curated celebration packages starting from ₹5,100. Pick the experience that matches your vision and occasion.' },
+  { num: '02', title: 'Book via WhatsApp', desc: 'Chat directly with our team for instant confirmation, custom requests, and to finalize date, time, and special add-ons.' },
+  { num: '03', title: 'Arrive & Celebrate', desc: 'Show up and be amazed. Our team sets everything up so you can focus entirely on the moment that matters most.' },
+];
+
+const faq = [
+  { q: 'Where is HIVY located in Surat?', a: 'HIVY is located in Adajan, Surat — a central and easily accessible location. Exact address is shared upon booking confirmation via WhatsApp.' },
+  { q: 'What is the minimum package price?', a: 'Our packages start from ₹5,100 for the Swing of Love setup. All packages include decoration, candles, a personal message board, and dedicated staff.' },
+  { q: 'Can I customise the decoration theme?', a: 'Absolutely! We offer custom decoration themes based on your preferences. Share your ideas with us on WhatsApp and our team will design a personalised setup for you.' },
+  { q: 'How far in advance should I book?', a: 'We recommend booking at least 2-3 days in advance, especially for weekends and special occasions like Valentine\'s Day and anniversaries. Same-day bookings may be available — contact us to check.' },
+  { q: 'Do you offer photography services?', a: 'Yes, we offer professional photography add-ons to capture your special moments. Mention this when booking via WhatsApp and we\'ll arrange it for you.' },
+  { q: 'Is HIVY suitable for proposals in Surat?', a: 'HIVY is one of Surat\'s most popular proposal venues! Our Fairy Tale Proposals package is designed specifically to create that perfect, unforgettable moment. We\'ve helped hundreds of couples say yes!' },
+];
+
+const whyUs = [
+  { icon: '🌹', title: 'Romantic Ambiance', desc: 'Handcrafted setups with premium flowers, fairy lights, and curated decor that turns any space into a romantic haven.' },
+  { icon: '⚡', title: 'Instant WhatsApp Booking', desc: 'Skip the forms and calls. Chat with us directly — confirm your slot in minutes, not hours.' },
+  { icon: '🎨', title: 'Fully Customisable', desc: 'Every celebration is unique. Tell us your vision and we\'ll make it real, right down to the smallest detail.' },
+  { icon: '✨', title: '500+ Happy Couples', desc: 'Hundreds of love stories created in Surat. Your special moment is in experienced, trusted hands.' },
+];
+
+const breadcrumbs = [{ name: 'Home', href: '/' }];
+---
+
+<Layout
+  title="HIVY Surat — Romantic Celebration Packages | Candlelight Dinner & Proposals"
+  description="Surat's #1 romantic experience venue. Book candlelight dinners, surprise setups, marriage proposals & anniversary celebrations. Packages from ₹5,100. Instant WhatsApp booking."
+  canonical="https://hivy.co.in/"
+  ogImage="https://hivy.co.in/images/og-home.jpg"
+  breadcrumbs={breadcrumbs}
+  faqSchema={faq.map(f => ({ question: f.q, answer: f.a }))}
+>
+  <Header />
+  <WhatsAppFloat />
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section class="relative min-h-screen flex items-center pt-16 overflow-hidden bg-gradient-to-br from-stone-50 via-white to-amber-50/30">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-primary/5 blur-3xl"></div>
+      <div class="absolute bottom-1/4 left-0 w-80 h-80 rounded-full bg-accent/5 blur-3xl"></div>
+      <div class="absolute top-20 left-1/3 w-px h-40 bg-gradient-to-b from-primary/20 to-transparent"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <!-- Left: Content -->
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full text-xs font-semibold text-primary mb-6 border border-primary/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          Surat's Favourite Romantic Experience Venue
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-5xl xl:text-6xl font-bold text-foreground leading-tight mb-6">
+          Create Moments<br />
+          <span class="gradient-text">Worth Remembering</span>
+        </h1>
+
+        <p class="speakable-summary hero-description text-lg text-muted leading-relaxed mb-8 max-w-lg">
+          Surat's premier romantic celebration studio — candlelight dinners, surprise setups, fairy tale proposals, and intimate anniversary experiences. Every detail, perfectly crafted.
+        </p>
+
+        <div class="flex flex-wrap gap-4 mb-10">
+          <div class="flex items-center gap-2">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary text-sm">★</span>
+            <span class="text-sm text-muted"><strong class="text-foreground">4.9/5</strong> Google Rating</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary text-sm">❤️</span>
+            <span class="text-sm text-muted"><strong class="text-foreground">500+</strong> Couples Celebrated</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary text-sm">📍</span>
+            <span class="text-sm text-muted"><strong class="text-foreground">Adajan</strong>, Surat</span>
+          </div>
+        </div>
+
+        <!-- Mobile CTA (hidden on lg — booking form is on the right) -->
+        <div class="flex gap-3 lg:hidden">
+          <a href={`https://wa.me/${siteConfig.whatsapp}?text=Hi%20HIVY!%20I%20want%20to%20book%20a%20romantic%20celebration%20in%20Surat.`}
+             target="_blank" rel="noopener noreferrer"
+             class="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors shadow-md">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Book via WhatsApp
+          </a>
+          <a href={`tel:${siteConfig.phone}`}
+             class="px-5 py-3.5 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-colors">
+            Call
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Booking Form -->
+      <div class="hidden lg:block">
+        <BookingForm client:load phone={siteConfig.phone} whatsapp={siteConfig.whatsapp} variant="hero" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SOCIAL PROOF STRIP ═══════════════════ -->
+  <section class="bg-primary/5 border-y border-primary/10 py-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap justify-center items-center gap-6 sm:gap-10 text-sm text-muted">
+        {[
+          ['🌹', 'Romantic Setups'],
+          ['💍', 'Surprise Proposals'],
+          ['🕯️', 'Candlelight Dinners'],
+          ['🎂', 'Birthday Celebrations'],
+          ['📸', 'Photo Decorations'],
+          ['💑', 'Anniversary Packages'],
+        ].map(([icon, label]) => (
+          <span class="flex items-center gap-1.5 font-medium text-foreground/70">
+            <span>{icon}</span> {label}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+  <section class="py-24 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Simple Process</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground">How It Works</h2>
+        <p class="text-muted mt-3 max-w-xl mx-auto">Book your dream celebration in three simple steps — no complicated process, just your beautiful moment.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {steps.map(s => (
+          <div class="glass rounded-2xl p-8 card-hover transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute top-0 right-0 text-8xl font-bold text-primary/5 font-serif leading-none select-none group-hover:text-primary/10 transition-colors">
+              {s.num}
+            </div>
+            <div class="relative">
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary font-bold text-sm font-mono mb-5">
+                {s.num}
+              </span>
+              <h3 class="text-lg font-bold text-foreground font-serif mb-3">{s.title}</h3>
+              <p class="text-muted text-sm leading-relaxed">{s.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PACKAGES ═══════════════════ -->
+  <section class="py-24 bg-surface">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Celebration Packages</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground">Choose Your Experience</h2>
+        <p class="text-muted mt-3 max-w-xl mx-auto">Thoughtfully curated packages for every romantic occasion — from intimate dinners to grand surprises.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {packages.map((pkg, i) => (
+          <div class="group bg-white border border-border rounded-2xl p-6 card-hover transition-all duration-300 flex flex-col">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-lg">
+                {pkg.emoji}
+              </div>
+              {i === 1 && (
+                <span class="text-[10px] font-semibold text-white bg-primary px-2 py-0.5 rounded-full">Most Popular</span>
+              )}
+            </div>
+            <h3 class="font-serif text-lg font-bold text-foreground mb-2">{pkg.name}</h3>
+            <p class="text-sm text-muted leading-relaxed mb-4 flex-1">{pkg.description}</p>
+            <div class="mt-auto">
+              <div class="flex items-baseline gap-1 mb-4">
+                <span class="text-2xl font-bold gradient-text">{pkg.price}</span>
+                <span class="text-xs text-muted">onwards</span>
+              </div>
+              <a href={`https://wa.me/${siteConfig.whatsapp}?text=Hi%20HIVY!%20I'm%20interested%20in%20the%20${encodeURIComponent(pkg.name)}%20package.%20Please%20share%20details.`}
+                 target="_blank" rel="noopener noreferrer"
+                 class="block w-full text-center py-2.5 rounded-xl border-2 border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-white transition-colors">
+                Book This Package
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-center text-sm text-muted mt-8">
+        Need a custom setup? <a href={`https://wa.me/${siteConfig.whatsapp}?text=Hi%20HIVY!%20I%20need%20a%20custom%20celebration%20setup%20in%20Surat.`} target="_blank" rel="noopener noreferrer" class="text-primary font-semibold hover:underline">Chat with us on WhatsApp →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SERVICES ═══════════════════ -->
+  <section class="py-24 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">What We Offer</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground">Our Celebration Services</h2>
+        <p class="text-muted mt-3 max-w-xl mx-auto">From intimate candlelight settings to grand surprise reveals — we specialise in every kind of romantic celebration in Surat.</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {serviceCategories.map(svc => (
+          <a href={svc.href} class="group flex flex-col items-center text-center p-5 bg-surface border border-border rounded-2xl card-hover transition-all duration-300">
+            <span class="text-3xl mb-3">{svc.emoji}</span>
+            <h3 class="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{svc.name}</h3>
+            <p class="text-xs text-muted mt-1 leading-relaxed">{svc.desc}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ WHY US ═══════════════════ -->
+  <section class="py-24 bg-gradient-to-br from-stone-50 to-amber-50/20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Why HIVY</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground">Surat Trusts HIVY</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {whyUs.map(w => (
+          <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover transition-all duration-300">
+            <div class="text-4xl mb-4">{w.icon}</div>
+            <h3 class="font-serif text-base font-bold text-foreground mb-2">{w.title}</h3>
+            <p class="text-sm text-muted leading-relaxed">{w.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ GOOGLE REVIEWS ═══════════════════ -->
+  <section class="py-24 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Real Stories</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground">Happy Couples in Surat</h2>
+        <div class="flex items-center justify-center gap-2 mt-3">
+          <span class="text-amber-400 text-lg">★★★★★</span>
+          <span class="text-sm text-muted">4.9/5 · 200+ Google Reviews</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {reviews.map(r => (
+          <div class="glass rounded-2xl p-6 card-hover transition-all duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                  {r.name.charAt(0)}
+                </div>
+                <div>
+                  <p class="font-semibold text-sm text-foreground">{r.name}</p>
+                  <p class="text-xs text-muted">{r.occasion}</p>
+                </div>
+              </div>
+              <span class="text-amber-400 text-sm">★★★★★</span>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">"{r.text}"</p>
+            <p class="text-xs text-muted/60 mt-3">{new Date(r.date).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ GALLERY PREVIEW ═══════════════════ -->
+  <section class="py-24 bg-surface">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Gallery</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground">Real Celebrations at HIVY</h2>
+        <p class="text-muted mt-3">A glimpse of the magical moments created in our Surat studio</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {[
+          { alt: 'Candlelight dinner setup at HIVY Surat', label: 'Candlelight Dinner', span: true },
+          { alt: 'Romantic anniversary decoration Surat', label: 'Anniversary Setup' },
+          { alt: 'Birthday balloon decoration HIVY', label: 'Birthday Surprise' },
+          { alt: 'Marriage proposal setup Surat', label: 'Fairy Tale Proposal', span: true },
+          { alt: 'Flower decoration for couple Surat', label: 'Flower Decor' },
+          { alt: 'BoHo chic celebration setup', label: 'BoHo Chic' },
+          { alt: 'Tent of romance setup HIVY', label: 'Tent of Romance' },
+        ].map((img, i) => (
+          <div class={`relative overflow-hidden rounded-2xl bg-gradient-to-br from-stone-100 to-amber-50 border border-border ${img.span ? 'col-span-2 row-span-1' : ''}`}
+               style={`aspect-ratio: ${img.span ? '2/1' : '1/1'};`}>
+            <div class="absolute inset-0 flex items-end p-4">
+              <span class="text-xs font-medium text-stone-600 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg">{img.label}</span>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center text-4xl opacity-20">{['🕯️','💐','🎂','💍','🌹','🎨','⛺'][i]}</div>
+          </div>
+        ))}
+      </div>
+      <div class="text-center mt-8">
+        <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-border text-sm font-semibold text-foreground hover:border-primary hover:text-primary transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          See More on Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FAQ ═══════════════════ -->
+  <section class="py-24 bg-white">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">FAQ</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+        <p class="text-muted mt-3">Everything you need to know about booking at HIVY Surat</p>
+      </div>
+      <div class="space-y-3" id="faq-list">
+        {faq.map((item, i) => (
+          <div class="faq-item border border-border rounded-2xl overflow-hidden">
+            <button class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left" aria-expanded="false">
+              <span class="text-sm font-semibold text-foreground">{item.q}</span>
+              <svg class="faq-icon h-4 w-4 text-primary flex-shrink-0 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="faq-content hidden px-6 pb-5">
+              <p class="text-sm text-muted leading-relaxed">{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ CTA ═══════════════════ -->
+  <section class="py-20 bg-gradient-to-br from-primary via-primary/90 to-accent">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">
+        Ready to Create Your Perfect Moment?
+      </h2>
+      <p class="text-white/80 text-lg mb-8 max-w-xl mx-auto">
+        Book your romantic celebration at HIVY Surat today. Packages from ₹5,100 — instant confirmation via WhatsApp.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`https://wa.me/${siteConfig.whatsapp}?text=Hi%20HIVY!%20I%20want%20to%20book%20a%20romantic%20celebration%20in%20Surat.%20Please%20share%20package%20details.`}
+           target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary font-bold rounded-xl hover:bg-white/90 transition-colors shadow-lg">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Book on WhatsApp
+        </a>
+        <a href={`tel:${siteConfig.phone}`}
+           class="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white font-bold rounded-xl hover:bg-white/10 transition-colors">
+          📞 {siteConfig.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.querySelectorAll('.faq-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const content = item?.querySelector('.faq-content');
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      // Close all
+      document.querySelectorAll('.faq-trigger').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.closest('.faq-item')?.querySelector('.faq-content')?.classList.add('hidden');
+        b.querySelector('.faq-icon')?.classList.remove('rotate-180');
+      });
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        content?.classList.remove('hidden');
+        icon?.classList.add('rotate-180');
+      }
+    });
+  });
+</script>

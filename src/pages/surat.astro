@@ -1,0 +1,857 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import WhatsAppFloat from '@/components/WhatsAppFloat.astro';
+import { siteConfig, packages } from '@/lib/config';
+
+const WA = `https://wa.me/${siteConfig.whatsapp}`;
+const WA_MSG = (msg: string) => `${WA}?text=${encodeURIComponent(msg)}`;
+
+const services = [
+  {
+    emoji: '🕯️', name: 'Candlelight Dinner in Surat',
+    slug: 'candlelight-dinner-surat',
+    short: 'Private candlelit table setting with floral arrangements, fairy lights and a curated menu — the most romantic candlelight dinner Surat couples swear by.',
+    steps: [
+      'Choose a date & time that works for you (evenings are most popular)',
+      'Pick your package — Swing of Love or Tent of Romance work beautifully for dinner',
+      'Share any special requests: cuisine preferences, message board, rose petals',
+      'Arrive and find your private space completely set up and ready',
+    ],
+  },
+  {
+    emoji: '🎂', name: 'Birthday Surprise in Surat',
+    slug: 'birthday-surprise-surat',
+    short: 'Surprise your loved one with a fully decorated private birthday setup — balloon arch, personalised message board, cake, fairy lights, and more.',
+    steps: [
+      'Tell us whose birthday it is and their favourite colours / theme',
+      'We secretly set up the entire space before you arrive',
+      'Walk in together — their reaction will be priceless',
+      'Our team handles the cake, décor and photography if needed',
+    ],
+  },
+  {
+    emoji: '💑', name: 'Anniversary Celebration in Surat',
+    slug: 'anniversary-surat',
+    short: 'Mark your milestone with a premium anniversary celebration Surat setup — roses, candles, personalised signage and a completely private venue just for two.',
+    steps: [
+      'Share your anniversary date and number of years',
+      'Pick a package and any custom add-ons (photo prints, wine, etc.)',
+      'We create a romantic setup tailored to your story',
+      'Enjoy a fully private, undisturbed celebration',
+    ],
+  },
+  {
+    emoji: '💍', name: 'Marriage Proposal in Surat',
+    slug: 'proposal-setup-surat',
+    short: 'HIVY is Surat\'s most popular venue for marriage proposals. Our Fairy Tale Proposal setup features arch décor, rose petals, fairy lights and a dedicated team to help you plan every detail.',
+    steps: [
+      'Tell us your proposal vision — intimate or grand',
+      'We design the setup: arch, flowers, ring reveal spot, message board',
+      'Your partner has no idea what awaits — we keep it a complete surprise',
+      'Say the words, she says yes, we capture the moment',
+    ],
+  },
+  {
+    emoji: '📸', name: 'Pre-Wedding Shoot in Surat',
+    slug: 'pre-wedding-shoot-surat',
+    short: 'Our curated pre-wedding shoot setups in Surat provide stunning backdrops — boho, fairy tale, romantic swing — so every frame looks magazine-worthy.',
+    steps: [
+      'Choose your backdrop theme and colour palette',
+      'Schedule a slot during golden hour for best lighting',
+      'We set up the full décor — you just show up and be yourselves',
+      'Add a professional photographer or bring your own',
+    ],
+  },
+  {
+    emoji: '💝', name: 'Surprise Date in Surat',
+    slug: 'surprise-date-surat',
+    short: 'Plan the ultimate surprise date in Surat — from the décor to the music to the mood. Your partner arrives to a private, magical space crafted just for them.',
+    steps: [
+      'Tell us about your partner — their favourite things and what surprises them',
+      'We plan and set up everything while you keep them guessing',
+      'Bring them to the venue at the agreed time',
+      'Watch their eyes light up — that\'s the HIVY moment',
+    ],
+  },
+  {
+    emoji: '👶', name: 'Baby Moments in Surat',
+    slug: 'baby-moments-surat',
+    short: 'Baby shower setups, gender reveal decorations and maternity shoot backdrops — all beautifully designed to celebrate new life in Surat.',
+    steps: [
+      'Share the theme: pink, blue, neutral or your preferred palette',
+      'Choose setup type: baby shower, gender reveal or maternity shoot',
+      'We handle all the décor, balloon arrangements and signage',
+      'Invite your closest family and celebrate this milestone in style',
+    ],
+  },
+  {
+    emoji: '❤️', name: "Valentine's Week in Surat",
+    slug: 'valentines-week-surat',
+    short: 'Celebrate all 7 days of Valentine\'s Week with a fresh romantic experience each day — from Rose Day to Valentine\'s Day, HIVY keeps the love alive.',
+    steps: [
+      'Plan ahead — Valentine\'s slots fill up by January',
+      'Book a different theme for different days of the week',
+      'Add surprise elements: chocolates, notes, personalised gifts',
+      'We set the mood; you write the love story',
+    ],
+  },
+];
+
+const whyUs = [
+  { icon: '🔒', title: '100% Private Venue', desc: 'No strangers, no noise. Every booking gets a fully private space — just you and your loved one, undisturbed.' },
+  { icon: '🌹', title: 'Premium Handcrafted Décor', desc: 'Fresh flowers, fairy lights, satin drapes and personalised touches — every setup is built by hand, just for you.' },
+  { icon: '⭐', title: '4.9★ Google Rating', desc: 'With 3,000+ couples served and 200+ five-star reviews, HIVY is Surat\'s most trusted romantic celebration venue.' },
+  { icon: '⚡', title: 'Instant WhatsApp Booking', desc: 'No long forms or waiting. Chat directly with our team, get a slot confirmed in minutes.' },
+  { icon: '🎨', title: 'Fully Customisable', desc: 'Every couple is different. Tell us your vision — theme, colours, message, extras — and we make it real.' },
+  { icon: '📍', title: 'Central Adajan Location', desc: 'Easily accessible from every Surat area. Located at The Boulevard, Adajan — just minutes from major landmarks.' },
+];
+
+const allSuratAreas = [
+  'Adajan', 'Vesu', 'Pal', 'Althan', 'Katargam', 'Varachha', 'Udhna', 'Athwa',
+  'Rander', 'Dindoli', 'Piplod', 'Palanpur Patia', 'Bhatar', 'Citylight', 'Sarthana',
+  'Sachin', 'Limbayat', 'Amroli', 'Umra', 'Ichchhapor', 'Sagrampura', 'Majura Gate',
+  'Ring Road', 'Parvat Patia', 'Khatodara', 'Jahangirpura', 'Ghod Dod Road', 'Magdalla',
+  'Dumas Road', 'Nana Varachha', 'Mota Varachha', 'Singanpore', 'Pandesara', 'Salabatpura',
+  'Kamrej', 'Kosad', 'Bamroli', 'Mora Bhagal', 'Nanpura', 'Lal Darwaja',
+];
+
+const faq = [
+  {
+    q: 'What is HIVY and where is it located in Surat?',
+    a: 'HIVY — Place for Celebrations is Surat\'s premier private celebration venue for couples. We are located at 252/253, 2nd Floor, The Boulevard, Near Pratham Circle, Galleria Street, Adajan, Surat — 394510. We specialise in candlelight dinners, birthday surprises, marriage proposals, anniversary celebrations and more.',
+  },
+  {
+    q: 'What are the package prices at HIVY Surat?',
+    a: 'HIVY offers 5 handcrafted celebration packages: Swing of Love (₹5,100), Elite Group Setup (₹5,400), BoHo Chic (₹5,700), Fairy Tale Proposals (₹6,300) and Tent of Romance (₹6,500). All packages include premium décor, candles, a personalised message board and dedicated staff. Food and add-ons can be added.',
+  },
+  {
+    q: 'Is HIVY a couples-only private celebration venue in Surat?',
+    a: 'Yes. HIVY is a 100% private celebration venue in Surat designed exclusively for couples and small groups. No other guests are present during your booking slot. You get the entire private space for the duration of your experience.',
+  },
+  {
+    q: 'How do I book a candlelight dinner at HIVY Surat?',
+    a: 'Booking is simple — WhatsApp us at +91 97270 27278. Share your occasion, preferred date, time and guest count. Our team confirms your slot within minutes and shares all the details. You can also call us directly for same-day queries.',
+  },
+  {
+    q: 'Can HIVY arrange a marriage proposal setup in Surat?',
+    a: 'Absolutely! HIVY is one of Surat\'s most popular venues for marriage proposals. Our Fairy Tale Proposals package (₹6,300) includes arch décor, rose petals, fairy lights and a surprise reveal setup. We\'ve helped hundreds of couples pop the question successfully. Share your vision and we\'ll plan every detail.',
+  },
+  {
+    q: 'How far in advance should I book a romantic dinner at HIVY Surat?',
+    a: 'We recommend booking at least 2–3 days in advance, especially for weekends and special occasions like Valentine\'s Day, anniversaries and New Year\'s Eve. For last-minute bookings, WhatsApp us and we\'ll check availability. Popular dates fill up fast.',
+  },
+  {
+    q: 'Does HIVY offer birthday surprise setups in Surat?',
+    a: 'Yes! Birthday surprises are one of our most booked services. We create a fully decorated private setup — balloon arch, personalised message board, fairy lights, flowers and cake arrangement — so your loved one walks in to a complete surprise. Tell us the theme and we handle everything.',
+  },
+  {
+    q: 'Does HIVY serve areas outside Adajan in Surat?',
+    a: 'Our venue is located in Adajan, but we welcome couples from all 40+ areas of Surat — including Vesu, Pal, Althan, Citylight, Bhatar, Katargam, Varachha, Udhna, Athwa, Rander, Piplod, Sarthana and everywhere in between. Adajan is centrally accessible by cab or auto from all major Surat areas.',
+  },
+  {
+    q: 'Can I customise the decoration at HIVY?',
+    a: 'Yes, every setup at HIVY is fully customisable. You can choose your colour scheme, floral arrangements, message board text, music, lighting mood, add-on items and more. Share your ideas with us on WhatsApp before your booking and our team will design a personalised experience just for you.',
+  },
+  {
+    q: 'Does HIVY offer photography for pre-wedding shoots and celebrations?',
+    a: 'Yes. We offer professional photography and videography add-ons for pre-wedding shoots, proposals, anniversaries and all celebration setups. Mention it when booking via WhatsApp and we\'ll coordinate the photographer for your session. You can also bring your own photographer — our setups are designed to be photogenic.',
+  },
+];
+
+const reviews = [
+  { name: 'Priya & Darshan', rating: 5, text: 'HIVY made our anniversary celebration so special. The candlelight dinner Surat setup was breathtaking — candles everywhere, fresh roses, personalised board. Cannot recommend enough!', occasion: 'Anniversary' },
+  { name: 'Akash Patel', rating: 5, text: 'Booked the Fairy Tale Proposal package and she said YES! The team at HIVY helped me plan every detail. Best marriage proposal setup in Surat, hands down.', occasion: 'Proposal' },
+  { name: 'Meera Shah', rating: 5, text: 'Birthday surprise for my husband was exactly as I imagined — actually better. The private celebration venue in Surat is exactly what couples need. No crowd, just us!', occasion: 'Birthday Surprise' },
+  { name: 'Ravi & Pooja', rating: 5, text: 'Had our pre-wedding shoot at HIVY with the BoHo Chic setup. Every photo turned out stunning. The team was patient, professional and extremely creative.', occasion: 'Pre-Wedding Shoot' },
+  { name: 'Kiran Joshi', rating: 5, text: 'Planned a surprise date for my partner at HIVY Surat. She walked in and was completely blown away. The Swing of Love setup with fairy lights was magical. Thank you HIVY!', occasion: 'Surprise Date' },
+  { name: 'Nidhi & Vishal', rating: 5, text: 'Valentine\'s Week was celebrated in the most romantic way at HIVY. Couples only venue in Surat that actually delivers on its promise. Pure privacy, premium décor, perfect evening.', occasion: "Valentine's Week" },
+];
+
+const breadcrumbs = [{ name: 'Surat', item: 'https://hivy.co.in/surat' }];
+
+const pageTitle = 'HIVY Surat — Best Private Romantic Celebration Venue | Candlelight Dinner, Proposals & Birthday Surprises';
+const pageDesc = 'HIVY is Surat\'s #1 couples-only private celebration venue in Adajan. Book candlelight dinner, marriage proposal, birthday surprise, anniversary & pre-wedding shoot. Packages from ₹5,100. Instant WhatsApp booking. 4.9★ | 3000+ couples served.';
+
+const suratFaqSchema = faq.map(f => ({ question: f.q, answer: f.a }));
+
+const localBusinessSchemaExtra = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "EventVenue", "CafeOrCoffeeShop", "Restaurant", "FoodEstablishment"],
+  "@id": "https://hivy.co.in/#business",
+  "name": "HIVY — Place for Celebrations",
+  "additionalType": [
+    "https://schema.org/EventVenue",
+    "https://schema.org/CafeOrCoffeeShop",
+    "https://schema.org/Restaurant",
+    "https://schema.org/Bakery"
+  ],
+  "keywords": "events venue surat, cafe surat, cake shop surat, restaurant surat, party planner surat, wedding planner surat, photography service surat, fine dining restaurant surat, candlelight dinner surat, birthday surprise surat, anniversary celebration surat, marriage proposal surat, couples only venue surat, private celebration venue surat, romantic dinner surat, pre wedding shoot surat",
+  "description": pageDesc,
+  "url": "https://hivy.co.in/surat",
+  "telephone": "+91 97270 27278",
+  "email": "hello@hivy.co.in",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "252/253, 2nd Floor, The Boulevard, Near Pratham Circle, Galleria Street, Green City Road",
+    "addressLocality": "Adajan",
+    "addressRegion": "Surat, Gujarat",
+    "postalCode": "394510",
+    "addressCountry": "IN"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 21.1702, "longitude": 72.8311 },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "12:00", "closes": "23:00"
+  }],
+  "priceRange": "₹₹ (₹5,100 – ₹6,500)",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "200",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "servesCuisine": "Romantic",
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Private Dining", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Couples Only", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Photography Available", "value": true }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/hivy_placeforcelebration/",
+    "https://www.facebook.com/p/Hivy-placeforcelebration-61553052747625/"
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDesc}
+  canonical="https://hivy.co.in/surat"
+  ogImage="https://hivy.co.in/images/og-home.jpg"
+  breadcrumbs={breadcrumbs}
+  faqSchema={suratFaqSchema}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchemaExtra)} />
+
+  <Header />
+  <WhatsAppFloat />
+
+  <!-- ════════════════════════════════════════════
+       GOOGLE BUSINESS PROFILE HERO
+  ════════════════════════════════════════════ -->
+  <section class="pt-20 pb-0 bg-white border-b border-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-muted py-4" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
+        <span class="text-border">/</span>
+        <span class="text-foreground font-medium">Surat</span>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-10 pb-0">
+
+        <!-- Left: GBP Card -->
+        <div class="lg:col-span-2 pb-8">
+
+          <!-- Open status -->
+          <div class="flex items-center gap-2 mb-4">
+            <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-green-700 bg-green-50 border border-green-200 px-3 py-1 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-500 pulse-dot"></span>
+              Open Now · Closes 11 PM
+            </span>
+          </div>
+
+          <!-- GBP Business Categories (all 10 from profile) -->
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#4285F4] px-3 py-1.5 rounded-full">
+              🏛️ Events Venue
+              <span class="text-[9px] bg-white/25 px-1.5 py-0.5 rounded-full tracking-wide">PRIMARY</span>
+            </span>
+            {[
+              { label: 'Cafe', icon: '☕' },
+              { label: 'Cake Shop', icon: '🎂' },
+              { label: 'Restaurant', icon: '🍽️' },
+              { label: 'Party Planner', icon: '🎉' },
+              { label: 'Wedding Planner', icon: '💍' },
+              { label: 'Live Music Venue', icon: '🎵' },
+              { label: 'Photography Service', icon: '📸' },
+              { label: 'Fast Food Restaurant', icon: '🥡' },
+              { label: 'Fine Dining Restaurant', icon: '🥂' },
+            ].map(cat => (
+              <span class="inline-flex items-center gap-1 text-xs font-medium text-[#5F6368] bg-[#F8F9FA] border border-[#DADCE0] px-2.5 py-1.5 rounded-full hover:border-[#4285F4] hover:text-[#4285F4] transition-colors cursor-default">
+                {cat.icon} {cat.label}
+              </span>
+            ))}
+          </div>
+
+          <!-- Business Name -->
+          <h1 class="font-serif text-3xl sm:text-4xl xl:text-5xl font-bold text-foreground leading-tight mb-3">
+            HIVY — <span class="gradient-text">Place for Celebrations</span>
+          </h1>
+          <p class="text-base text-muted font-medium mb-4">Surat's #1 Private Romantic Celebration Venue · Adajan, Surat</p>
+
+          <!-- Rating Row -->
+          <div class="flex flex-wrap items-center gap-4 mb-6">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl font-bold text-foreground">4.9</span>
+              <div class="flex text-amber-400 text-lg">★★★★★</div>
+              <span class="text-sm text-muted">(200+ Google Reviews)</span>
+            </div>
+            <div class="h-4 w-px bg-border hidden sm:block"></div>
+            <span class="text-sm text-muted">❤️ <strong class="text-foreground">3,000+</strong> Couples Served</span>
+            <div class="h-4 w-px bg-border hidden sm:block"></div>
+            <span class="text-sm text-muted">📍 <strong class="text-foreground">Adajan</strong>, Surat 394510</span>
+          </div>
+
+          <!-- Info Grid (GBP style) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+            {[
+              { icon: '📍', label: 'Address', value: '252/253, 2nd Floor, The Boulevard, Near Pratham Circle, Galleria Street, Adajan, Surat — 394510' },
+              { icon: '📞', label: 'Phone', value: '+91 97270 27278' },
+              { icon: '🕐', label: 'Hours', value: 'Mon–Sun: 12:00 PM – 11:00 PM' },
+              { icon: '💰', label: 'Starting Price', value: '₹5,100 per setup (all-inclusive)' },
+            ].map(item => (
+              <div class="flex items-start gap-3 bg-surface border border-border rounded-xl px-4 py-3">
+                <span class="text-lg flex-shrink-0">{item.icon}</span>
+                <div>
+                  <p class="text-[10px] font-semibold text-muted uppercase tracking-wider">{item.label}</p>
+                  <p class="text-sm text-foreground font-medium leading-snug mt-0.5">{item.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- GBP Action Buttons -->
+          <div class="flex flex-wrap gap-3 mb-8">
+            <a href={WA_MSG('Hi HIVY! I want to book a romantic celebration in Surat. Please share package details.')}
+               target="_blank" rel="noopener noreferrer"
+               class="flex items-center gap-2 px-5 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors shadow-md text-sm">
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Chat on WhatsApp
+            </a>
+            <a href="tel:+919727027278"
+               class="flex items-center gap-2 px-5 py-3 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-colors text-sm">
+              📞 Call Now
+            </a>
+            <a href="https://maps.app.goo.gl/YourGoogleMapsLink"
+               target="_blank" rel="noopener noreferrer"
+               class="flex items-center gap-2 px-5 py-3 border-2 border-border text-foreground font-semibold rounded-xl hover:border-primary hover:text-primary transition-colors text-sm">
+              🗺️ Get Directions
+            </a>
+            <a href="/"
+               class="flex items-center gap-2 px-5 py-3 border-2 border-border text-foreground font-semibold rounded-xl hover:border-primary hover:text-primary transition-colors text-sm">
+              🌐 Visit Website
+            </a>
+          </div>
+
+          <!-- Tags / Keywords — Google-style -->
+          <div class="flex flex-wrap gap-2">
+            {[
+              { label: 'Candlelight Dinner Surat', color: 'bg-blue-50 text-blue-700 border-blue-200' },
+              { label: 'Marriage Proposal Surat', color: 'bg-pink-50 text-pink-700 border-pink-200' },
+              { label: 'Birthday Surprise Surat', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+              { label: 'Anniversary Celebration Surat', color: 'bg-rose-50 text-rose-700 border-rose-200' },
+              { label: 'Couples Only Venue Surat', color: 'bg-purple-50 text-purple-700 border-purple-200' },
+              { label: 'Private Celebration Venue Surat', color: 'bg-green-50 text-green-700 border-green-200' },
+              { label: 'Romantic Dinner Surat', color: 'bg-red-50 text-red-700 border-red-200' },
+              { label: 'Pre-Wedding Shoot Surat', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+              { label: 'Party Planner Surat', color: 'bg-orange-50 text-orange-700 border-orange-200' },
+              { label: 'Wedding Planner Surat', color: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200' },
+              { label: 'Fine Dining Surat', color: 'bg-teal-50 text-teal-700 border-teal-200' },
+              { label: 'Photography Service Surat', color: 'bg-cyan-50 text-cyan-700 border-cyan-200' },
+            ].map(tag => (
+              <span class={`text-xs border px-2.5 py-1 rounded-full font-medium ${tag.color}`}>{tag.label}</span>
+            ))}
+          </div>
+        </div>
+
+        <!-- Right: Photo Grid (GBP style) -->
+        <div class="hidden lg:block lg:col-span-1">
+          <div class="grid grid-cols-2 gap-2 h-full max-h-[440px]">
+            <div class="col-span-2 rounded-2xl bg-gradient-to-br from-amber-100 to-rose-100 border border-border flex items-center justify-center text-5xl" style="height:200px;">🕯️</div>
+            <div class="rounded-xl bg-gradient-to-br from-pink-50 to-rose-100 border border-border flex items-center justify-center text-3xl" style="height:116px;">💍</div>
+            <div class="rounded-xl bg-gradient-to-br from-amber-50 to-orange-100 border border-border flex items-center justify-center text-3xl" style="height:116px;">🎂</div>
+            <div class="rounded-xl bg-gradient-to-br from-rose-50 to-pink-100 border border-border flex items-center justify-center text-3xl" style="height:116px;">🌹</div>
+            <div class="rounded-xl bg-gradient-to-br from-stone-100 to-amber-100 border border-border flex items-center justify-center text-3xl" style="height:116px;">📸</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       GOOGLE MAPS EMBED
+  ════════════════════════════════════════════ -->
+  <section class="bg-white border-b border-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-blue-50 border border-blue-200">
+          <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div>
+          <h2 class="text-base font-bold text-foreground">Find Us on Google Maps</h2>
+          <p class="text-xs text-muted">252/253, The Boulevard, Near Pratham Circle, Adajan, Surat — 394510</p>
+        </div>
+      </div>
+      <div class="w-full rounded-2xl overflow-hidden border border-border shadow-sm" style="height: 380px;">
+        <iframe
+          src="https://maps.google.com/maps?q=21.1702,72.8311&z=16&output=embed"
+          width="100%"
+          height="380"
+          style="border:0;"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="HIVY — Place for Celebrations, Adajan, Surat location on Google Maps"
+        ></iframe>
+      </div>
+      <div class="flex flex-wrap gap-3 mt-4">
+        <a href="https://maps.app.goo.gl/YourGoogleMapsLink" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          View Larger Map
+        </a>
+        <span class="text-border">·</span>
+        <span class="text-sm text-muted">Near Pratham Circle, Galleria Street, Green City Road, Adajan, Surat</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       ABOUT HIVY SURAT
+  ════════════════════════════════════════════ -->
+  <section class="py-16 bg-gradient-to-br from-stone-50 via-white to-amber-50/20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-3">About HIVY Surat</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground leading-tight mb-5">
+            Surat's Most Loved <span class="gradient-text">Private Celebration Venue</span>
+          </h2>
+          <div class="space-y-4 text-muted text-sm leading-relaxed">
+            <p>
+              HIVY is Surat's premier <strong class="text-foreground">couples-only private celebration venue</strong>, located in the heart of Adajan. Since 2023, we have created unforgettable romantic experiences for over 3,000 couples across Surat — from intimate candlelight dinners to grand marriage proposals.
+            </p>
+            <p>
+              Whether you are planning a <strong class="text-foreground">candlelight dinner in Surat</strong> for your anniversary, a <strong class="text-foreground">birthday surprise in Surat</strong> for your partner, or a once-in-a-lifetime <strong class="text-foreground">marriage proposal in Surat</strong>, HIVY's team handles every detail so you can be fully present in the moment.
+            </p>
+            <p>
+              What makes us different from other venues? <strong class="text-foreground">100% private space</strong> — no other couples, no strangers, no interruptions. Just you, your loved one, and a beautifully crafted setup designed to take your breath away.
+            </p>
+            <p>
+              With a <strong class="text-foreground">4.9★ Google rating</strong> and 200+ five-star reviews, HIVY is the most trusted <strong class="text-foreground">private celebration venue in Surat</strong>. Packages start from just ₹5,100 with instant WhatsApp booking.
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          {[
+            { num: '3,000+', label: 'Happy Couples', icon: '❤️' },
+            { num: '4.9★', label: 'Google Rating', icon: '⭐' },
+            { num: '5', label: 'Curated Packages', icon: '🎁' },
+            { num: '100%', label: 'Private Venue', icon: '🔒' },
+          ].map(stat => (
+            <div class="bg-white border border-border rounded-2xl p-6 text-center card-hover transition-all duration-300">
+              <div class="text-3xl mb-2">{stat.icon}</div>
+              <div class="font-serif text-2xl font-bold gradient-text mb-1">{stat.num}</div>
+              <div class="text-xs text-muted font-medium">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SERVICES — STEP BY STEP
+  ════════════════════════════════════════════ -->
+  <section class="py-20 bg-white" id="services">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">What We Offer</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">
+          Our Celebration Services in Surat
+        </h2>
+        <p class="text-muted max-w-2xl mx-auto text-sm leading-relaxed">
+          From romantic dinners to fairy tale proposals — HIVY specialises in every kind of private celebration in Surat. Here's how each service works, step by step.
+        </p>
+      </div>
+
+      <div class="space-y-12">
+        {services.map((svc, idx) => (
+          <div class={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-start pb-12 ${idx < services.length - 1 ? 'border-b border-border' : ''}`}>
+            <div class={idx % 2 === 1 ? 'lg:order-2' : ''}>
+              <div class="flex items-center gap-3 mb-4">
+                <span class="flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 text-2xl flex-shrink-0">{svc.emoji}</span>
+                <div>
+                  <h3 class="font-serif text-xl font-bold text-foreground">{svc.name}</h3>
+                  <a href={`/${svc.slug}`} class="text-xs text-primary hover:underline font-medium">View full service page →</a>
+                </div>
+              </div>
+              <p class="text-sm text-muted leading-relaxed mb-5">{svc.short}</p>
+              <a href={WA_MSG(`Hi HIVY! I want to book a ${svc.name} package. Please share details.`)}
+                 target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors text-sm shadow-md">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                Book {svc.name}
+              </a>
+            </div>
+            <div class={idx % 2 === 1 ? 'lg:order-1' : ''}>
+              <div class="bg-surface border border-border rounded-2xl p-6">
+                <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-4">How it works — Step by Step</p>
+                <ol class="space-y-4">
+                  {svc.steps.map((step, si) => (
+                    <li class="flex items-start gap-4">
+                      <span class="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 text-primary font-bold text-xs font-mono">{si + 1}</span>
+                      <span class="text-sm text-muted leading-relaxed pt-0.5">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       PACKAGES
+  ════════════════════════════════════════════ -->
+  <section class="py-20 bg-surface" id="packages">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Celebration Packages</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">
+          All Packages & Prices
+        </h2>
+        <p class="text-muted max-w-xl mx-auto text-sm">
+          Five thoughtfully curated packages for every romantic occasion — all-inclusive setups with premium décor, candles, personalised message board and a dedicated host.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {packages.map((pkg, i) => (
+          <article class={`group bg-white border-2 rounded-2xl p-6 card-hover transition-all duration-300 flex flex-col relative overflow-hidden ${i === 1 ? 'border-primary shadow-lg' : 'border-border'}`}>
+            {i === 1 && (
+              <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent"></div>
+            )}
+            {i === 1 && (
+              <span class="absolute top-4 right-4 text-[10px] font-bold text-white bg-primary px-2 py-0.5 rounded-full">MOST POPULAR</span>
+            )}
+            <div class="flex items-center gap-3 mb-4">
+              <span class="flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 text-2xl flex-shrink-0">{pkg.emoji}</span>
+              <div>
+                <h3 class="font-serif font-bold text-foreground text-base">{pkg.name}</h3>
+                <p class="text-[10px] text-muted uppercase tracking-wide">HIVY Surat</p>
+              </div>
+            </div>
+            <p class="text-sm text-muted leading-relaxed mb-5 flex-1">{pkg.shortDescription}</p>
+
+            <div class="border-t border-border pt-4 mt-auto">
+              <div class="flex items-baseline gap-1 mb-1">
+                <span class="text-xs text-muted">Starting at</span>
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-3xl font-bold gradient-text">₹{pkg.price.toLocaleString('en-IN')}</span>
+                <span class="text-xs text-muted bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-medium">Inclusive</span>
+              </div>
+
+              <!-- What's included -->
+              <ul class="space-y-1.5 mb-5">
+                {[
+                  'Premium décor & fairy lights',
+                  'Fresh flowers & candles',
+                  'Personalised message board',
+                  'Dedicated host / staff',
+                  'Private venue — no other guests',
+                ].map(item => (
+                  <li class="flex items-center gap-2 text-xs text-muted">
+                    <span class="text-green-500 font-bold flex-shrink-0">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <a href={WA_MSG(`Hi HIVY! I'm interested in the ${pkg.name} package (₹${pkg.price.toLocaleString('en-IN')}). Please share availability and details.`)}
+                 target="_blank" rel="noopener noreferrer"
+                 class={`block w-full text-center py-3 rounded-xl font-semibold text-sm transition-colors ${i === 1 ? 'bg-primary text-white hover:bg-primary-dark shadow-md' : 'border-2 border-primary text-primary hover:bg-primary hover:text-white'}`}>
+                Book {pkg.name}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Custom package note -->
+      <div class="mt-10 p-6 bg-gradient-to-br from-amber-50 to-rose-50 border border-amber-200 rounded-2xl text-center">
+        <p class="text-sm text-foreground font-semibold mb-1">Need something different?</p>
+        <p class="text-sm text-muted mb-4">We offer fully custom celebration setups tailored to your vision — any theme, any occasion, any budget.</p>
+        <a href={WA_MSG('Hi HIVY! I need a custom celebration setup in Surat. Can you help?')}
+           target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors text-sm">
+          Enquire for Custom Setup →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       WHY CHOOSE HIVY
+  ════════════════════════════════════════════ -->
+  <section class="py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Why Choose HIVY</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">
+          Why 3,000+ Surat Couples <span class="gradient-text">Trust HIVY</span>
+        </h2>
+        <p class="text-muted max-w-2xl mx-auto text-sm">
+          As Surat's leading <strong>couples-only private celebration venue</strong>, we don't just set up décor — we craft experiences that you'll remember for a lifetime.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {whyUs.map(item => (
+          <div class="bg-surface border border-border rounded-2xl p-6 card-hover transition-all duration-300">
+            <div class="flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 text-2xl mb-5">{item.icon}</div>
+            <h3 class="font-serif text-base font-bold text-foreground mb-3">{item.title}</h3>
+            <p class="text-sm text-muted leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       GOOGLE REVIEWS
+  ════════════════════════════════════════════ -->
+  <section class="py-20 bg-surface">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Customer Reviews</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">
+          What Surat Couples Say About HIVY
+        </h2>
+        <div class="flex items-center justify-center gap-3 mt-3">
+          <div class="flex text-amber-400 text-xl">★★★★★</div>
+          <span class="text-sm text-muted font-medium">4.9 out of 5 · 200+ Google Reviews</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {reviews.map(r => (
+          <div class="bg-white border border-border rounded-2xl p-6 card-hover transition-all duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                  {r.name.charAt(0)}
+                </div>
+                <div>
+                  <p class="font-semibold text-sm text-foreground">{r.name}</p>
+                  <p class="text-[10px] text-muted uppercase tracking-wide">{r.occasion}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="text-amber-400 text-sm">★★★★★</span>
+              </div>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">"{r.text}"</p>
+            <div class="flex items-center gap-2 mt-4 pt-4 border-t border-border">
+              <svg class="w-3.5 h-3.5 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              <span class="text-[10px] text-muted">Google Review · HIVY Surat</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="text-center mt-8">
+        <a href="https://g.page/r/hivy-surat/review" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 px-6 py-3 border-2 border-border rounded-xl text-sm font-semibold text-foreground hover:border-primary hover:text-primary transition-colors">
+          ⭐ Write a Google Review
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       40 SURAT AREAS COVERAGE
+  ════════════════════════════════════════════ -->
+  <section class="py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">We Serve All of Surat</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">
+          HIVY Welcomes Couples from <span class="gradient-text">All 40 Surat Areas</span>
+        </h2>
+        <p class="text-muted max-w-2xl mx-auto text-sm leading-relaxed">
+          Our <strong>private celebration venue in Surat</strong> is centrally located in Adajan — easily reachable from every corner of the city. No matter where you live in Surat, HIVY is just a cab ride away.
+          Whether you're looking for a <strong>candlelight dinner in Surat</strong>, a <strong>romantic dinner in Surat</strong> or a <strong>marriage proposal in Surat</strong>, we serve couples from across the city.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
+        {allSuratAreas.map(area => (
+          <div class="flex items-center gap-2 bg-surface border border-border rounded-xl px-3 py-2.5 text-sm text-muted hover:border-primary hover:text-primary transition-colors cursor-default">
+            <span class="text-primary text-xs">📍</span>
+            <span class="font-medium">{area}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="bg-gradient-to-br from-amber-50 to-rose-50 border border-amber-200 rounded-2xl p-6 text-center">
+        <p class="text-sm text-foreground">
+          <strong>From Adajan to Varachha, Vesu to Katargam</strong> — HIVY is Surat's most accessible <strong>romantic dinner</strong> and <strong>private celebration venue</strong>. Our Adajan location puts us within 15–25 minutes of most Surat areas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       FAQ
+  ════════════════════════════════════════════ -->
+  <section class="py-20 bg-surface" id="faq">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">FAQ</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-muted text-sm">Everything you need to know about HIVY — Surat's best private celebration venue for couples.</p>
+      </div>
+
+      <div class="space-y-3" id="surat-faq-list">
+        {faq.map((item, i) => (
+          <div class="faq-item border border-border rounded-2xl overflow-hidden bg-white">
+            <button class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left" aria-expanded={i === 0 ? 'true' : 'false'}>
+              <span class="text-sm font-semibold text-foreground">{item.q}</span>
+              <svg class={`faq-icon h-4 w-4 text-primary flex-shrink-0 transition-transform ${i === 0 ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class={`faq-content px-6 pb-5 ${i === 0 ? '' : 'hidden'}`}>
+              <p class="text-sm text-muted leading-relaxed">{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       HOW TO BOOK — 3 STEPS
+  ════════════════════════════════════════════ -->
+  <section class="py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Booking Process</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">
+          Book Your Celebration in <span class="gradient-text">3 Simple Steps</span>
+        </h2>
+        <p class="text-muted text-sm max-w-xl mx-auto">No complicated forms, no long wait times. Your dream celebration at HIVY Surat is just 3 steps away.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          { num: '01', icon: '💬', title: 'WhatsApp Us', desc: 'Chat with our team at +91 97270 27278. Share your occasion, preferred date, time and any special requests. We respond instantly.' },
+          { num: '02', icon: '🎨', title: 'Choose & Customise', desc: 'Pick from our 5 packages or describe your custom vision. We\'ll suggest the perfect setup for your candlelight dinner, proposal or birthday surprise in Surat.' },
+          { num: '03', icon: '🎉', title: 'Arrive & Celebrate', desc: 'Show up at the confirmed time and find your private space perfectly set up. Focus entirely on your loved one — we handle everything else.' },
+        ].map(step => (
+          <div class="relative bg-surface border border-border rounded-2xl p-8 card-hover transition-all duration-300 overflow-hidden group">
+            <div class="absolute top-0 right-0 text-8xl font-bold text-primary/5 font-serif leading-none select-none group-hover:text-primary/10 transition-colors">
+              {step.num}
+            </div>
+            <div class="relative">
+              <div class="flex items-center gap-3 mb-5">
+                <span class="flex items-center justify-center w-11 h-11 rounded-2xl bg-primary/10 text-2xl">{step.icon}</span>
+                <span class="font-mono text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-lg">Step {step.num}</span>
+              </div>
+              <h3 class="font-serif text-lg font-bold text-foreground mb-3">{step.title}</h3>
+              <p class="text-sm text-muted leading-relaxed">{step.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       KEYWORDS SECTION (SEO Rich Text)
+  ════════════════════════════════════════════ -->
+  <section class="py-16 bg-surface border-t border-border">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-stone max-w-none text-sm text-muted leading-relaxed">
+        <h2 class="font-serif text-2xl font-bold text-foreground mb-4">HIVY — Surat's Best Private Celebration Venue for Couples</h2>
+        <p>
+          If you're searching for the best <strong>candlelight dinner in Surat</strong>, look no further than HIVY — located at The Boulevard, Adajan. We are a dedicated <strong>couples-only venue in Surat</strong> that provides a 100% private, beautifully decorated space for every occasion.
+        </p>
+        <p class="mt-4">
+          Our <strong>private celebration venue in Surat</strong> is perfect for planning a surprise <strong>birthday celebration in Surat</strong>, an intimate <strong>anniversary celebration in Surat</strong>, or a once-in-a-lifetime <strong>marriage proposal in Surat</strong>. We've helped thousands of couples create magical memories, and we'd love to do the same for you.
+        </p>
+        <p class="mt-4">
+          Looking for a <strong>romantic dinner in Surat</strong> that's truly private? HIVY is the answer. Unlike restaurants that seat multiple tables, HIVY gives you the entire space exclusively. Our <strong>pre-wedding shoot in Surat</strong> packages are also a favourite — our curated backdrops make every photo frame look cinematic.
+        </p>
+        <p class="mt-4">
+          Book your <strong>candlelight dinner in Surat</strong>, <strong>birthday surprise in Surat</strong>, or <strong>anniversary celebration in Surat</strong> today via WhatsApp at <a href="tel:+919727027278" class="text-primary font-semibold">+91 97270 27278</a>. Packages for our <strong>couples-only venue in Surat</strong> start from just ₹5,100 — all-inclusive, with instant confirmation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       FINAL CTA
+  ════════════════════════════════════════════ -->
+  <section class="py-20 bg-gradient-to-br from-primary via-primary/90 to-accent">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      <div class="text-white/80 text-4xl mb-4">💍🕯️❤️</div>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">
+        Ready to Create a Memory That Lasts Forever?
+      </h2>
+      <p class="text-white/80 text-base mb-3 max-w-2xl mx-auto">
+        Whether it's a <strong class="text-white">candlelight dinner in Surat</strong>, a <strong class="text-white">marriage proposal in Surat</strong>, a <strong class="text-white">birthday surprise</strong> or an <strong class="text-white">anniversary celebration</strong> — HIVY's team is ready to make it unforgettable.
+      </p>
+      <p class="text-white/60 text-sm mb-10">
+        Packages from ₹5,100 · 100% Private Venue · Instant WhatsApp Booking · Adajan, Surat
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={WA_MSG('Hi HIVY! I want to book a romantic celebration in Surat. Please share package details and availability.')}
+           target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary font-bold rounded-xl hover:bg-white/90 transition-colors shadow-lg text-sm">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Book on WhatsApp
+        </a>
+        <a href="tel:+919727027278"
+           class="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white font-bold rounded-xl hover:bg-white/10 transition-colors text-sm">
+          📞 +91 97270 27278
+        </a>
+      </div>
+      <p class="text-white/50 text-xs mt-8">
+        252/253, 2nd Floor, The Boulevard, Near Pratham Circle, Galleria Street, Adajan, Surat — 394510
+      </p>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.querySelectorAll('#surat-faq-list .faq-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const content = item?.querySelector('.faq-content');
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('#surat-faq-list .faq-trigger').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.closest('.faq-item')?.querySelector('.faq-content')?.classList.add('hidden');
+        b.querySelector('.faq-icon')?.classList.remove('rotate-180');
+      });
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        content?.classList.remove('hidden');
+        icon?.classList.add('rotate-180');
+      }
+    });
+  });
+</script>
