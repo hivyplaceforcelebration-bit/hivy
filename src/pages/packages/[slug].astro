@@ -1,0 +1,25 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import FFCPackageDetailPage from '@/components/ffc-package-detail-page';
+import { packages } from '@/lib/ffc-config';
+
+export function getStaticPaths() {
+  return packages
+    .filter(p => !p.hidden)
+    .map(pkg => ({
+      params: { slug: pkg.slug },
+      props: { pkg },
+    }));
+}
+
+const { pkg } = Astro.props;
+---
+
+<Layout
+  title={`${pkg.name} Package | HIVY Surat — ₹${pkg.price.toLocaleString('en-IN')}`}
+  description={`Book the ${pkg.name} at HIVY Surat — ${pkg.shortDescription}. Starting ₹${pkg.price.toLocaleString('en-IN')}. Private venue, premium décor, instant WhatsApp booking.`}
+  canonical={`https://hivy.co.in/packages/${pkg.slug}`}
+  ogImage={pkg.thumbnail}
+>
+  <FFCPackageDetailPage client:load package={pkg} />
+</Layout>

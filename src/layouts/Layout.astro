@@ -1,7 +1,5 @@
 ---
-// Layout.astro — HIVY Surat
-// All audit fixes: lang="en-IN", unique GSC token, FAQPage schema, Speakable, price in catalog
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/lib/ffc-config';
 import '@/styles/globals.css';
 
 interface Props {
@@ -10,7 +8,6 @@ interface Props {
   canonical?: string;
   ogImage?: string;
   noindex?: boolean;
-  pageType?: 'home' | 'area' | 'keyword' | 'generic';
   breadcrumbs?: { name: string; item: string }[];
   faqSchema?: { question: string; answer: string }[];
 }
@@ -21,7 +18,6 @@ const {
   canonical = Astro.url.href,
   ogImage = '/images/og-image.webp',
   noindex = false,
-  pageType = 'generic',
   breadcrumbs,
   faqSchema,
 } = Astro.props;
@@ -29,23 +25,17 @@ const {
 const canonicalUrl = canonical.endsWith('/') && canonical !== `${siteConfig.website}/`
   ? canonical.slice(0, -1) : canonical;
 
-const isHome = pageType === 'home';
-
-// ── LocalBusiness schema (HIVY — all bugs fixed) ─────────────────────────
 const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "EventVenue"],
+  "@type": ["LocalBusiness", "EventVenue", "CafeOrCoffeeShop", "Restaurant"],
   "@id": `${siteConfig.website}/#business`,
-  "name": siteConfig.fullName,
-  "alternateName": ["HIVY Surat", "HIVY Place for Celebration"],
+  "name": siteConfig.name,
   "url": siteConfig.website,
-  "logo": { "@type": "ImageObject", "url": `${siteConfig.website}/images/logo.webp`, "width": 200, "height": 200 },
-  "image": [`${siteConfig.website}/images/gallery/hivy-celebration-surat-1.webp`],
+  "logo": { "@type": "ImageObject", "url": `${siteConfig.website}/images/hivy logo.avif`, "width": 200, "height": 80 },
+  "image": [`${siteConfig.website}/hivy-images/5100/2.webp`],
   "description": siteConfig.description,
   "telephone": siteConfig.phone,
   "email": siteConfig.email,
-  "slogan": siteConfig.slogan,
-  "foundingDate": siteConfig.foundingDate,
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "252/253, 2nd Floor, The Boulevard, Near Pratham Circle, Galleria Street, Green City Road",
@@ -63,35 +53,11 @@ const localBusinessSchema = {
   "priceRange": "₹₹ (₹5,100–₹6,500)",
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": siteConfig.rating,
-    "reviewCount": siteConfig.reviewCount,
+    "ratingValue": "4.9",
+    "reviewCount": "450",
     "bestRating": "5", "worstRating": "1"
   },
-  // FIX: hasOfferCatalog now includes price (was missing in original)
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Romantic Celebration Packages",
-    "itemListElement": [
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Swing of Love" }, "price": "5100", "priceCurrency": "INR" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Elite Group Setup" }, "price": "5400", "priceCurrency": "INR" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "BoHo Chic" }, "price": "5700", "priceCurrency": "INR" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fairy Tale Proposals" }, "price": "6300", "priceCurrency": "INR" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tent of Romance" }, "price": "6500", "priceCurrency": "INR" },
-    ]
-  },
   "sameAs": [siteConfig.socialLinks.instagram, siteConfig.socialLinks.facebook],
-  "keywords": "candlelight dinner Surat, romantic cafe Surat, birthday surprise Surat, anniversary celebration Surat, proposal setup Surat, couple cafe Surat, HIVY Surat"
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": `${siteConfig.website}/#website`,
-  "url": siteConfig.website,
-  "name": siteConfig.fullName,
-  "description": siteConfig.description,
-  "publisher": { "@id": `${siteConfig.website}/#business` },
-  "inLanguage": "en-IN"
 };
 
 const breadcrumbItems = [
@@ -104,143 +70,74 @@ const breadcrumbSchema = {
   "itemListElement": breadcrumbItems.map((c, i) => ({ "@type": "ListItem", "position": i+1, "name": c.name, "item": c.item }))
 };
 
-// FIX: Speakable schema (was missing in original HIVY)
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": `${canonicalUrl}#webpage`,
-  "url": canonicalUrl,
-  "name": title,
-  "description": description,
-  "isPartOf": { "@id": `${siteConfig.website}/#website` },
-  "speakable": {
-    "@type": "SpeakableSpecification",
-    "cssSelector": [".speakable-summary", "h1", ".hero-description"]
-  },
-  "inLanguage": "en-IN"
-};
-
-// FIX: FAQPage schema (was completely missing in original HIVY)
-const homeFaqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Where is HIVY located in Surat?",
-      "acceptedAnswer": { "@type": "Answer", "text": "HIVY is located at 252/253, 2nd Floor, The Boulevard, Near Pratham Circle, Galleria Street, Green City Road, Adajan, Surat - 394510. Easily accessible from all major areas of Surat." }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I book a candlelight dinner at HIVY Surat?",
-      "acceptedAnswer": { "@type": "Answer", "text": `WhatsApp ${siteConfig.phone} or call directly. Share your occasion, preferred date and guest count for instant confirmation and a custom quote.` }
-    },
-    {
-      "@type": "Question",
-      "name": "What are the starting prices for HIVY celebration packages?",
-      "acceptedAnswer": { "@type": "Answer", "text": "HIVY packages start from ₹5,100 (Swing of Love) and go up to ₹6,500 (Tent of Romance). All packages include premium décor, food, mocktails and more." }
-    },
-    {
-      "@type": "Question",
-      "name": "Can we book HIVY for a marriage proposal in Surat?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Absolutely! Our Fairy Tale Proposals setup (₹6,300) features arch décor, fairy lights and champagne for the perfect 'yes' moment in Surat." }
-    },
-    {
-      "@type": "Question",
-      "name": "Is HIVY a private venue?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes, HIVY offers 100% private celebrations. No other guests are present during your booking slot — just you and your loved one." }
-    }
-  ]
-};
-
 const faqPageSchema = faqSchema ? {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": faqSchema.map(f => ({ "@type": "Question", "name": f.question, "acceptedAnswer": { "@type": "Answer", "text": f.answer } }))
 } : null;
+
+const GTM_ID = 'GTM-PSXMHLQF';
+const META_PIXEL = '1463182795375744';
 ---
 
 <!DOCTYPE html>
-<!-- FIX: lang="en-IN" (was "en" in original) -->
 <html lang="en-IN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalUrl} />
   {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-  <!-- FIX: HIVY needs its own unique GSC verification token (NOT shared with FFC) -->
-  <!-- TODO: Generate a new token from Google Search Console for hivy.co.in -->
-  {siteConfig.tracking.googleVerification !== 'TODO_HIVY_UNIQUE_TOKEN' &&
-    <meta name="google-site-verification" content={siteConfig.tracking.googleVerification} />
-  }
+  <meta name="geo.region" content="IN-GJ" />
+  <meta name="geo.placename" content="Surat" />
+  <meta name="geo.position" content="21.1702;72.8311" />
+  <meta name="ICBM" content="21.1702, 72.8311" />
+  <meta name="theme-color" content="#92400E" />
 
-  <!-- FIX: Geo tags (were missing in original HIVY) -->
-  <meta name="geo.region" content={siteConfig.geo.region} />
-  <meta name="geo.placename" content={siteConfig.geo.placename} />
-  <meta name="geo.position" content={siteConfig.geo.position} />
-  <meta name="ICBM" content={siteConfig.geo.icbm} />
-  <meta name="theme-color" content={siteConfig.themeColor} />
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_IN" />
   <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:site_name" content={siteConfig.fullName} />
+  <meta property="og:site_name" content={siteConfig.name} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={`${siteConfig.website}${ogImage}`} />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={`${siteConfig.website}${ogImage}`} />
 
-  <!-- Favicons -->
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- JSON-LD Schemas -->
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
-  {isHome && <script type="application/ld+json" set:html={JSON.stringify(homeFaqSchema)} />}
   {faqPageSchema && <script type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />}
 
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PSXMHLQF');
+  <!-- GTM -->
+  <script define:vars={{ GTM_ID }}>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',GTM_ID);
   </script>
-
   <!-- Meta Pixel -->
-  <script>
+  <script define:vars={{ META_PIXEL }}>
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init','1463182795375744');fbq('track','PageView');
+    fbq('init', META_PIXEL);fbq('track','PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1463182795375744&ev=PageView&noscript=1"/></noscript>
 </head>
-
-<!-- GTM noscript -->
 <body class="min-h-screen bg-background text-foreground font-sans antialiased">
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSXMHLQF" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <slot />
 </body>
 </html>

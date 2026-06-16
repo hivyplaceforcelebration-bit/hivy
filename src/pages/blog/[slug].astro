@@ -1,0 +1,23 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import FFCBlogPostPage from '@/components/ffc-blog-post-page';
+import { getAllBlogPosts } from '@/lib/ffc-config';
+
+export function getStaticPaths() {
+  const posts = getAllBlogPosts();
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<Layout
+  title={`${post.title} | HIVY Blog — Romantic Celebration Ideas Surat`}
+  description={post.excerpt}
+  canonical={`https://hivy.co.in/blog/${post.slug}`}
+>
+  <FFCBlogPostPage client:load post={post} />
+</Layout>

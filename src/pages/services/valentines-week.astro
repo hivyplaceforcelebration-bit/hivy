@@ -1,0 +1,9 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import FFCServicePage from '@/components/ffc-service-page';
+import { serviceCategories } from '@/lib/ffc-config';
+const svc = serviceCategories.find(s => s.slug === 'valentines-week') || serviceCategories[0];
+---
+<Layout title="Valentine's Week Celebration in Surat — HIVY | Romantic 7-Day Experience" description="Celebrate all 7 days of Valentine's Week at HIVY Surat. Rose Day, Chocolate Day, Hug Day, Kiss Day & Valentine's Day — romantic private setups for couples. From ₹5,100." canonical="https://hivy.co.in/services/valentines-week">
+  <FFCServicePage client:load service={svc} />
+</Layout>

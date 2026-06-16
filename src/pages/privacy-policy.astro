@@ -1,0 +1,21 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { FFCHeader, FFCFooter } from '@/components/ffc-layout';
+---
+<Layout title="Privacy Policy — HIVY Surat" description="Privacy policy for HIVY — Place for Celebrations, Adajan, Surat." canonical="https://hivy.co.in/privacy-policy">
+  <FFCHeader client:load />
+  <main class="container mx-auto px-4 py-20 max-w-3xl">
+    <h1 class="text-3xl font-bold mb-6">Privacy Policy</h1>
+    <p class="text-gray-600 mb-4">Last updated: January 2025</p>
+    <div class="prose prose-stone max-w-none text-gray-700 space-y-4">
+      <p>HIVY — Place for Celebrations ("we", "us") is committed to protecting your personal information. This policy explains how we collect, use and protect your data.</p>
+      <h2 class="text-xl font-semibold mt-6">Information We Collect</h2>
+      <p>We collect your name, phone number, email and booking details when you submit our booking form or contact us via WhatsApp.</p>
+      <h2 class="text-xl font-semibold mt-6">How We Use Your Information</h2>
+      <p>We use your information solely to confirm bookings, send reminders and improve our service. We do not sell your data to third parties.</p>
+      <h2 class="text-xl font-semibold mt-6">Contact Us</h2>
+      <p>For any privacy concerns, email us at hello@hivy.co.in or call +91 9727027278.</p>
+    </div>
+  </main>
+  <FFCFooter client:load />
+</Layout>

@@ -1,292 +1,95 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import WhatsAppFloat from '@/components/WhatsAppFloat.astro';
-import BookingForm from '@/components/BookingForm';
-import { siteConfig, packages, suratAreas, keywordPages } from '@/lib/config';
+import FFCKeywordPage from '@/components/ffc-keyword-page';
+import FFCAreaPage from '@/components/ffc-area-page';
+import {
+  suratAreas, serviceCategories, getAreaBySlug,
+  type AreaConfig, type ServiceCategory, type ServiceKeyword
+} from '@/lib/ffc-config';
+import { getAllExpandedKeywordSlugs, getExpandedKeywordBySlug, type ExpandedKeyword } from '@/lib/expanded-keywords';
 
 export async function getStaticPaths() {
-  // Area pages: "candlelight-dinner-in-adajan-surat", etc.
-  const services = [
-    { slug: 'candlelight-dinner', name: 'Candlelight Dinner', emoji: '🕯️' },
-    { slug: 'birthday-surprise', name: 'Birthday Surprise', emoji: '🎂' },
-    { slug: 'anniversary-celebration', name: 'Anniversary Celebration', emoji: '💑' },
-    { slug: 'proposal-setup', name: 'Proposal Setup', emoji: '💍' },
-    { slug: 'surprise-date', name: 'Surprise Date', emoji: '💝' },
-    { slug: 'pre-wedding-shoot', name: 'Pre-Wedding Photoshoot', emoji: '📸' },
-    { slug: 'baby-moments', name: 'Baby Moments', emoji: '👶' },
-    { slug: 'romantic-decoration', name: 'Romantic Decoration', emoji: '🌹' },
-    { slug: 'dinner-date', name: 'Dinner Date', emoji: '🍽️' },
-    { slug: 'birthday-party', name: 'Birthday Party', emoji: '🎉' },
-  ];
+  const paths: any[] = [];
 
-  const areaPages = suratAreas.flatMap(area =>
-    services.map(svc => ({
-      params: { slug: `${svc.slug}-in-${area.slug}` },
-      props: {
-        pageType: 'area' as const,
-        city: 'Surat',
-        area: area.name,
-        areaSlug: area.slug,
-        service: svc.name,
-        serviceSlug: svc.slug,
-        serviceEmoji: svc.emoji,
-      },
-    }))
-  );
-
-  const keywordPagePaths = keywordPages.map(kw => ({
-    params: { slug: kw.slug },
-    props: {
-      pageType: 'keyword' as const,
-      title: kw.title,
-      h1: kw.h1,
-      slug: kw.slug,
-    },
-  }));
-
-  // Area overview pages (e.g., /adajan-surat)
-  const areaOverviewPaths = suratAreas.map(area => ({
-    params: { slug: area.slug },
-    props: {
-      pageType: 'area-overview' as const,
-      area: area.name,
-      areaSlug: area.slug,
-      city: 'Surat',
-    },
-  }));
-
-  return [...areaPages, ...keywordPagePaths, ...areaOverviewPaths];
-}
-
-const props = Astro.props as any;
-const { pageType } = props;
-
-// Build page content based on type
-let title = '';
-let description = '';
-let h1 = '';
-let intro = '';
-let faqItems: { q: string; a: string }[] = [];
-let breadcrumbs: { name: string; href: string }[] = [];
-
-if (pageType === 'area') {
-  const { area, service, serviceEmoji, serviceSlug, areaSlug } = props;
-  title = `${service} in ${area}, Surat — HIVY | From ₹5,100`;
-  description = `Looking for the best ${service.toLowerCase()} in ${area}, Surat? HIVY offers premium romantic setups ${service.toLowerCase()} near ${area}. Book instantly on WhatsApp. Packages from ₹5,100.`;
-  h1 = `${service} in ${area}, Surat`;
-  intro = `HIVY is ${area}'s most trusted romantic celebration studio in Surat. Whether you're planning a special ${service.toLowerCase()} for your partner or a surprise setup, our team creates magical experiences tailored just for you — near ${area} and across Surat.`;
-  faqItems = [
-    { q: `Where can I book a ${service.toLowerCase()} in ${area}, Surat?`, a: `HIVY is conveniently located in Adajan, Surat — just a short drive from ${area}. Book via WhatsApp for instant confirmation.` },
-    { q: `What is the price for ${service.toLowerCase()} near ${area}?`, a: `HIVY's celebration packages start from ₹5,100. We offer 5 packages tailored for different occasions and group sizes.` },
-    { q: `Can you do custom setups for ${service.toLowerCase()} in ${area}?`, a: `Yes! All setups are customisable. Share your vision with us on WhatsApp and we'll create the perfect experience.` },
-    { q: `How far is HIVY from ${area}?`, a: `HIVY is located in Adajan, easily accessible from ${area} by cab or auto. Exact location is shared upon booking.` },
-  ];
-  breadcrumbs = [
-    { name: 'Home', href: '/' },
-    { name: area, href: `/${areaSlug}` },
-    { name: service, href: `/${serviceSlug}-in-${areaSlug}` },
-  ];
-} else if (pageType === 'keyword') {
-  const { title: kwTitle, h1: kwH1, slug } = props;
-  title = `${kwTitle} — HIVY | Best Romantic Experience in Surat`;
-  description = `${kwTitle} at HIVY, Surat's #1 romantic celebration venue. Premium setups, candlelight, flowers & personalised décor. Packages from ₹5,100. Instant WhatsApp booking.`;
-  h1 = kwH1;
-  const serviceType = kwH1.replace('Best ', '').replace(' in Surat', '');
-  intro = `HIVY offers Surat's most celebrated ${serviceType.toLowerCase()} experience. Our team specialises in creating personalised, beautiful setups that turn your special occasion into an unforgettable memory. With 500+ happy couples and a 4.9 Google rating, we're Surat's most trusted romantic venue.`;
-  faqItems = [
-    { q: `What is the best place for ${serviceType.toLowerCase()} in Surat?`, a: `HIVY in Adajan is rated the best romantic celebration venue in Surat with 200+ five-star Google reviews.` },
-    { q: `How much does ${serviceType.toLowerCase()} cost at HIVY?`, a: `Packages start from ₹5,100 for the Swing of Love setup, going up to ₹6,500 for the Tent of Romance.` },
-    { q: `How do I book ${serviceType.toLowerCase()} at HIVY Surat?`, a: `Simply click the WhatsApp button and chat with our team. We confirm your booking in minutes.` },
-    { q: `Does HIVY offer photography for ${serviceType.toLowerCase()}?`, a: `Yes, we offer professional photography add-ons. Mention it when booking and we'll arrange it for your celebration.` },
-  ];
-  breadcrumbs = [
-    { name: 'Home', href: '/' },
-    { name: kwH1, href: `/${slug}` },
-  ];
-} else if (pageType === 'area-overview') {
-  const { area, areaSlug } = props;
-  title = `Romantic Celebration & Candlelight Dinner in ${area}, Surat — HIVY`;
-  description = `Looking for romantic experiences near ${area}, Surat? HIVY offers candlelight dinners, birthday surprises, proposals & anniversary setups near ${area}. Book on WhatsApp.`;
-  h1 = `Romantic Celebrations in ${area}, Surat`;
-  intro = `Planning a special celebration near ${area}? HIVY Surat — located in Adajan — is the go-to destination for couples from ${area} seeking premium romantic experiences. From intimate candlelight dinners to fairytale proposals, we bring your vision to life.`;
-  faqItems = [
-    { q: `Where can I find a romantic cafe near ${area}, Surat?`, a: `HIVY in Adajan is just a short distance from ${area} and offers Surat's best romantic celebration experiences.` },
-    { q: `What romantic experiences are available near ${area} Surat?`, a: `HIVY offers candlelight dinners, birthday surprises, anniversary setups, proposals, and more — all accessible from ${area}.` },
-    { q: `How do I book a celebration near ${area}?`, a: `Chat with us on WhatsApp — we'll confirm your booking in minutes and share the exact address. It's that simple!` },
-  ];
-  breadcrumbs = [
-    { name: 'Home', href: '/' },
-    { name: area, href: `/${areaSlug}` },
-  ];
-}
-
-const nearbyAreas = suratAreas.slice(0, 8);
----
-
-<Layout
-  title={title}
-  description={description}
-  canonical={`https://hivy.co.in/${Astro.params.slug}`}
-  breadcrumbs={breadcrumbs}
-  faqSchema={faqItems.map(f => ({ question: f.q, answer: f.a }))}
->
-  <Header />
-  <WhatsAppFloat />
-
-  <!-- Hero -->
-  <section class="relative pt-28 pb-16 bg-gradient-to-br from-stone-50 via-white to-amber-50/30 overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl"></div>
-    </div>
-    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <!-- Breadcrumb -->
-      <nav class="flex items-center gap-2 text-xs text-muted mb-8" aria-label="Breadcrumb">
-        {breadcrumbs.map((crumb, i) => (
-          <>
-            {i > 0 && <span class="text-border">/</span>}
-            {i === breadcrumbs.length - 1
-              ? <span class="text-foreground font-medium">{crumb.name}</span>
-              : <a href={crumb.href} class="hover:text-primary transition-colors">{crumb.name}</a>
-            }
-          </>
-        ))}
-      </nav>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        <div>
-          <h1 class="font-serif text-3xl sm:text-4xl xl:text-5xl font-bold text-foreground leading-tight mb-6">
-            {h1.includes(' in ') ? (
-              <>
-                {h1.split(' in ')[0]}
-                {' in '}
-                <span class="gradient-text">{h1.split(' in ').slice(1).join(' in ')}</span>
-              </>
-            ) : (
-              <span class="gradient-text">{h1}</span>
-            )}
-          </h1>
-          <p class="speakable-summary text-base text-muted leading-relaxed mb-8">{intro}</p>
-
-          <div class="flex flex-wrap gap-3 mb-8">
-            {['⭐ 4.9/5 Rating', '💑 500+ Couples', '📍 Adajan, Surat', '✅ Instant Booking'].map(tag => (
-              <span class="px-3 py-1.5 bg-white border border-border rounded-full text-xs font-medium text-muted">{tag}</span>
-            ))}
-          </div>
-
-          <div class="flex gap-3">
-            <a href={`https://wa.me/${siteConfig.whatsapp}?text=Hi%20HIVY!%20I%20want%20to%20book%20a%20${encodeURIComponent(h1)}%20package.`}
-               target="_blank" rel="noopener noreferrer"
-               class="flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors shadow-md">
-              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-              Book via WhatsApp
-            </a>
-            <a href={`tel:${siteConfig.phone}`}
-               class="px-5 py-3 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-colors">
-              Call Now
-            </a>
-          </div>
-        </div>
-
-        <div>
-          <BookingForm client:load phone={siteConfig.phone} whatsapp={siteConfig.whatsapp} />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Packages -->
-  <section class="py-20 bg-surface">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h2 class="font-serif text-2xl sm:text-3xl font-bold text-foreground text-center mb-10">Our Packages</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {packages.map(pkg => (
-          <div class="bg-white border border-border rounded-2xl p-5 card-hover transition-all duration-300">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="text-2xl">{pkg.emoji}</span>
-              <h3 class="font-serif font-bold text-foreground">{pkg.name}</h3>
-            </div>
-            <p class="text-sm text-muted mb-4 leading-relaxed">{pkg.shortDescription}</p>
-            <div class="flex items-center justify-between">
-              <span class="font-bold gradient-text">₹{pkg.price.toLocaleString('en-IN')}</span>
-              <a href={`https://wa.me/${siteConfig.whatsapp}?text=Hi!%20I%20want%20to%20book%20the%20${encodeURIComponent(pkg.name)}%20package%20at%20HIVY.`}
-                 target="_blank" rel="noopener noreferrer"
-                 class="text-xs font-semibold text-primary hover:underline">Book →</a>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="py-20 bg-white">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <h2 class="font-serif text-2xl sm:text-3xl font-bold text-foreground text-center mb-10">Frequently Asked Questions</h2>
-      <div class="space-y-3" id="faq-list">
-        {faqItems.map(item => (
-          <div class="faq-item border border-border rounded-2xl overflow-hidden">
-            <button class="faq-trigger w-full flex items-center justify-between gap-4 px-5 py-4 text-left" aria-expanded="false">
-              <span class="text-sm font-semibold text-foreground">{item.q}</span>
-              <svg class="faq-icon h-4 w-4 text-primary flex-shrink-0 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            <div class="faq-content hidden px-5 pb-4">
-              <p class="text-sm text-muted leading-relaxed">{item.a}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Nearby Areas / Internal linking -->
-  <section class="py-16 bg-surface border-t border-border">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h2 class="font-serif text-xl font-bold text-foreground mb-6">
-        {pageType === 'area' || pageType === 'area-overview'
-          ? 'We Also Serve Nearby Areas in Surat'
-          : 'Explore Celebrations Across Surat'}
-      </h2>
-      <div class="flex flex-wrap gap-2">
-        {nearbyAreas.map(area => (
-          <a href={`/${area.slug}`}
-             class="px-3 py-1.5 bg-white border border-border rounded-full text-xs text-muted hover:text-primary hover:border-primary transition-colors">
-            {area.name}
-          </a>
-        ))}
-        {keywordPages.slice(0, 6).map(kw => (
-          <a href={`/${kw.slug}`}
-             class="px-3 py-1.5 bg-white border border-border rounded-full text-xs text-muted hover:text-primary hover:border-primary transition-colors">
-            {kw.title}
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <Footer />
-</Layout>
-
-<script>
-  document.querySelectorAll('.faq-trigger').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const content = item?.querySelector('.faq-content');
-      const icon = btn.querySelector('.faq-icon');
-      const isOpen = btn.getAttribute('aria-expanded') === 'true';
-      document.querySelectorAll('.faq-trigger').forEach(b => {
-        b.setAttribute('aria-expanded', 'false');
-        b.closest('.faq-item')?.querySelector('.faq-content')?.classList.add('hidden');
-        b.querySelector('.faq-icon')?.classList.remove('rotate-180');
-      });
-      if (!isOpen) {
-        btn.setAttribute('aria-expanded', 'true');
-        content?.classList.remove('hidden');
-        icon?.classList.add('rotate-180');
-      }
+  // 1. Area pages: /adajan-surat etc.
+  suratAreas.forEach(area => {
+    paths.push({
+      params: { slug: area.slug },
+      props: { pageType: 'area', area, keyword: null, service: null, expandedKeyword: null },
     });
   });
-</script>
+
+  // 2. Service keyword pages from ffc-config
+  serviceCategories.forEach(svc => {
+    svc.keywords.forEach(kw => {
+      paths.push({
+        params: { slug: kw.slug },
+        props: { pageType: 'keyword', area: null, keyword: kw, service: svc, expandedKeyword: null },
+      });
+    });
+  });
+
+  // 3. Expanded keywords (3000+)
+  const expandedSlugs = getAllExpandedKeywordSlugs();
+  expandedSlugs.forEach(slug => {
+    const kw = getExpandedKeywordBySlug(slug);
+    if (kw) {
+      // Find the matching service for cross-linking
+      const matchedService = serviceCategories.find(s => s.slug === kw.category)
+        || serviceCategories[0];
+      // Create a fake ServiceKeyword for the expanded keyword
+      const fakeKw: ServiceKeyword = {
+        slug: kw.slug,
+        title: kw.title,
+        h1: kw.h1,
+        metaTitle: kw.metaTitle,
+        metaDescription: kw.metaDescription,
+      };
+      paths.push({
+        params: { slug },
+        props: {
+          pageType: 'keyword',
+          area: null,
+          keyword: fakeKw,
+          service: matchedService,
+          expandedKeyword: kw,
+        },
+      });
+    }
+  });
+
+  return paths;
+}
+
+type Props = {
+  pageType: 'area' | 'keyword';
+  area: AreaConfig | null;
+  keyword: ServiceKeyword | null;
+  service: ServiceCategory | null;
+  expandedKeyword: ExpandedKeyword | null;
+};
+
+const { pageType, area, keyword, service, expandedKeyword } = Astro.props;
+const slug = Astro.params.slug as string;
+
+let title = '';
+let description = '';
+const canonical = `https://hivy.co.in/${slug}`;
+
+if (pageType === 'area' && area) {
+  title = `Romantic Celebration & Candlelight Dinner in ${area.name}, Surat — HIVY`;
+  description = `Looking for a romantic venue near ${area.name}, Surat? HIVY offers candlelight dinners, birthday surprises, proposals & anniversary setups near ${area.name}. Packages from ₹5,100.`;
+} else if (keyword) {
+  title = keyword.metaTitle;
+  description = keyword.metaDescription;
+}
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  {pageType === 'area' && area && (
+    <FFCAreaPage client:load area={area} />
+  )}
+  {pageType === 'keyword' && keyword && service && (
+    <FFCKeywordPage client:load service={service} keyword={keyword} />
+  )}
+</Layout>

@@ -1,0 +1,22 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { FFCHeader, FFCFooter } from '@/components/ffc-layout';
+---
+<Layout title="Terms & Conditions — HIVY Surat" description="Terms and conditions for booking at HIVY — Place for Celebrations, Adajan, Surat." canonical="https://hivy.co.in/terms-conditions">
+  <FFCHeader client:load />
+  <main class="container mx-auto px-4 py-20 max-w-3xl">
+    <h1 class="text-3xl font-bold mb-6">Terms & Conditions</h1>
+    <p class="text-gray-600 mb-4">Last updated: January 2025</p>
+    <div class="prose prose-stone max-w-none text-gray-700 space-y-4">
+      <h2 class="text-xl font-semibold">Booking Policy</h2>
+      <p>All bookings must be confirmed via WhatsApp. Slots are reserved only upon advance payment.</p>
+      <h2 class="text-xl font-semibold mt-6">Cancellation & Rescheduling</h2>
+      <p>Rescheduling must be informed at least 24 hours in advance. No refunds are applicable. You may reschedule within one month, subject to availability.</p>
+      <h2 class="text-xl font-semibold mt-6">No Refund Policy</h2>
+      <p>HIVY operates a strict no-refund policy. Please confirm your date carefully before booking.</p>
+      <h2 class="text-xl font-semibold mt-6">Conduct</h2>
+      <p>HIVY is a couples-only private venue. All guests must conduct themselves respectfully. We reserve the right to refuse service.</p>
+    </div>
+  </main>
+  <FFCFooter client:load />
+</Layout>
