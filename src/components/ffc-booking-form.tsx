@@ -287,8 +287,20 @@ export function FFCBookingForm({ pageTitle, variant = 'default', packageName, de
               id="phone"
               type="tel"
               placeholder="10-digit mobile number"
-              maxLength={10}
-              {...register('phone')}
+              {...register('phone', {
+                onChange: (e) => {
+                  let val = e.target.value;
+                  // Keep only digits
+                  let digits = val.replace(/\D/g, '');
+                  // Strip country code/leading zeros if longer than 10 digits
+                  if (digits.startsWith('91') && digits.length > 10) {
+                    digits = digits.substring(2);
+                  } else if (digits.startsWith('0') && digits.length > 10) {
+                    digits = digits.substring(1);
+                  }
+                  e.target.value = digits.slice(0, 10);
+                }
+              })}
               className={errors.phone ? 'border-red-500' : ''}
             />
             {errors.phone && (
@@ -322,7 +334,7 @@ export function FFCBookingForm({ pageTitle, variant = 'default', packageName, de
               </Label>
               <Select 
                 defaultValue={defaultPackageSlug}
-                onValueChange={(value) => setValue('selectedPackage', value)}
+                onValueChange={(value) => setValue('selectedPackage', value, { shouldValidate: true })}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select package" />
@@ -343,7 +355,7 @@ export function FFCBookingForm({ pageTitle, variant = 'default', packageName, de
                 <Gift className="h-4 w-4 text-amber-800" />
                 Your Moment *
               </Label>
-              <Select onValueChange={(value) => setValue('occasion', value)}>
+              <Select onValueChange={(value) => setValue('occasion', value, { shouldValidate: true })}>
                 <SelectTrigger className={`w-full ${errors.occasion ? 'border-red-500' : ''}`}>
                   <SelectValue placeholder="Select moment" />
                 </SelectTrigger>
@@ -387,7 +399,7 @@ export function FFCBookingForm({ pageTitle, variant = 'default', packageName, de
                 <Clock className="h-4 w-4 text-amber-800" />
                 Preferred Time *
               </Label>
-              <Select onValueChange={(value) => setValue('preferredTime', value)}>
+              <Select onValueChange={(value) => setValue('preferredTime', value, { shouldValidate: true })}>
                 <SelectTrigger className={`w-full ${errors.preferredTime ? 'border-red-500' : ''}`}>
                   <SelectValue placeholder="Select time" />
                 </SelectTrigger>
