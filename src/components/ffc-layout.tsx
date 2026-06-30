@@ -46,7 +46,7 @@ export function FFCHeader() {
       <nav className="container mx-auto px-4 py-2">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <a href="/" className="flex items-center">
+          <a href="/" className="flex items-center gap-2">
             <img
               src="/images/hivy logo.avif"
               alt="HIVY - Place for Celebrations"
@@ -55,6 +55,9 @@ export function FFCHeader() {
               className="h-14 md:h-16 w-auto object-contain"
              
             />
+            <span className="text-sm font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+              Surat
+            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -96,13 +99,18 @@ export function FFCHeader() {
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between py-4 border-b">
-                    <img
-                      src="/images/hivy logo.avif"
-                      alt="HIVY - Place for Celebrations"
-                      width={100}
-                      height={50}
-                      className="h-12 w-auto object-contain"
-                    />
+                    <div className="flex items-center gap-2">
+                      <img
+                        src="/images/hivy logo.avif"
+                        alt="HIVY - Place for Celebrations"
+                        width={100}
+                        height={50}
+                        className="h-12 w-auto object-contain"
+                      />
+                      <span className="text-xs font-semibold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
+                        Surat
+                      </span>
+                    </div>
                   </div>
                   
                   <nav className="flex-1 py-6">

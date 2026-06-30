@@ -88,7 +88,7 @@ export default function FFCReviewsSlider({ showTitle = true, compact = false }: 
               <Star className="h-4 w-4 mr-2 fill-amber-400 text-amber-400" /> Google Reviews
             </Badge>
             <h2 className="text-2xl md:text-3xl font-bold font-serif mb-2">
-              What Our Guests Say
+              What Our Guests Say About HIVY Surat
             </h2>
             <div className="flex items-center justify-center gap-2">
               <div className="flex">

@@ -417,12 +417,12 @@ export default function FFCHomePage() {
         </div>
         
         <div className="container mx-auto px-4 py-10 md:py-28 relative">
-          {/* MOBILE LAYOUT: Form-first, compact hero */}
+          {/* MOBILE LAYOUT: Compact hero without form */}
           <div className="lg:hidden">
             {/* Compact Hero Text for Mobile */}
             <div className="text-center mb-5">
               <h1 className="text-3xl sm:text-4xl font-bold mb-2 leading-tight font-serif">
-                HIVY - Place for Celebrations
+                HIVY Surat - Place for Celebrations
               </h1>
               <p className="text-base sm:text-lg text-white/90 mb-3">
                 {siteConfig.tagline}
@@ -438,11 +438,6 @@ export default function FFCHomePage() {
                   <Users className="h-3 w-3" /> 3000+ Couples
                 </span>
               </div>
-            </div>
-
-            {/* Booking Form Immediately Visible on Mobile */}
-            <div>
-              <FFCBookingForm variant="hero" />
             </div>
 
             {/* Quick Action Buttons */}
@@ -462,53 +457,46 @@ export default function FFCHomePage() {
             </div>
           </div>
 
-          {/* DESKTOP LAYOUT: Side-by-side text + form */}
-          <div className="hidden lg:grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-left">
-              <Badge className="mb-6 bg-white/20 text-white border-white/30 text-sm px-4 py-1">
-                <Sparkles className="h-4 w-4 mr-2" /> Couples Only Experience in Surat
-              </Badge>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight font-serif">
-                HIVY - Place for Celebrations
-              </h1>
-              <p className="text-xl md:text-2xl mb-4 text-white/90 max-w-2xl">
-                {siteConfig.tagline}
-              </p>
-              <p className="text-lg mb-8 text-white/80 max-w-xl">
-                Surat's premier venue for romantic candlelight dinners, birthday surprises, anniversary celebrations, marriage proposals & intimate date nights. 100% private, couples-only experience.
-              </p>
-              
-              <div className="flex flex-row gap-4">
-                <a href="/packages">
-                  <Button size="lg" className="bg-white text-amber-800 hover:bg-amber-50 text-lg px-8 py-6">
-                    <Gift className="h-5 w-5 mr-2" />
-                    View Packages
-                  </Button>
-                </a>
-                <a href={`tel:${siteConfig.phone}`}>
-                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-6">
-                    <Phone className="h-5 w-5 mr-2" />
-                    {siteConfig.phone}
-                  </Button>
-                </a>
-              </div>
-              
-              <div className="mt-10 flex flex-wrap gap-4 text-base">
-                <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
-                  <Shield className="h-4 w-4" /> 100% Private
-                </span>
-                <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
-                  <Star className="h-4 w-4" /> 4.9★ Rated
-                </span>
-                <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
-                  <Users className="h-4 w-4" /> 3000+ Couples
-                </span>
-              </div>
+          {/* DESKTOP LAYOUT: Centered layout without form */}
+          <div className="hidden lg:flex flex-col items-center text-center max-w-4xl mx-auto">
+            <Badge className="mb-6 bg-white/20 text-white border-white/30 text-sm px-4 py-1">
+              <Sparkles className="h-4 w-4 mr-2" /> Couples Only Experience in Surat
+            </Badge>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight font-serif">
+              HIVY Surat - Place for Celebrations
+            </h1>
+            <p className="text-xl md:text-2xl mb-4 text-white/90">
+              {siteConfig.tagline}
+            </p>
+            <p className="text-lg mb-8 text-white/80 max-w-2xl">
+              Surat's premier venue for romantic candlelight dinners, birthday surprises, anniversary celebrations, marriage proposals & intimate date nights. 100% private, couples-only experience.
+            </p>
+            
+            <div className="flex flex-row gap-4 justify-center">
+              <a href="/packages">
+                <Button size="lg" className="bg-white text-amber-800 hover:bg-amber-50 text-lg px-8 py-6">
+                  <Gift className="h-5 w-5 mr-2" />
+                  View Packages
+                </Button>
+              </a>
+              <a href={`tel:${siteConfig.phone}`}>
+                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-6">
+                  <Phone className="h-5 w-5 mr-2" />
+                  {siteConfig.phone}
+                </Button>
+              </a>
             </div>
             
-            {/* Hero Booking Form - Desktop */}
-            <div>
-              <FFCBookingForm variant="hero" />
+            <div className="mt-10 flex flex-wrap gap-6 text-base justify-center">
+              <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+                <Shield className="h-4 w-4" /> 100% Private
+              </span>
+              <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+                <Star className="h-4 w-4" /> 4.9★ Rated
+              </span>
+              <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+                <Users className="h-4 w-4" /> 3000+ Couples
+              </span>
             </div>
           </div>
         </div>
@@ -620,6 +608,24 @@ export default function FFCHomePage() {
               </Button>
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Booking Form Section */}
+      <section className="py-12 md:py-20 bg-stone-50 border-y border-stone-200">
+        <div className="container mx-auto px-4 max-w-xl">
+          <div className="text-center mb-8">
+            <Badge className="mb-3 bg-amber-100 text-amber-900 border-amber-200">
+              Quick & Easy Booking
+            </Badge>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 font-serif text-gray-900">
+              Reserve Your Romantic Setup in Surat
+            </h2>
+            <p className="text-gray-600 text-sm md:text-base">
+              Select your date, package & preferred slot. Get instant confirmation on WhatsApp.
+            </p>
+          </div>
+          <FFCBookingForm pageTitle="Home Page Section" variant="default" />
         </div>
       </section>
 
@@ -937,7 +943,7 @@ export default function FFCHomePage() {
       <section className="py-20 bg-gradient-to-r from-amber-800 to-amber-700 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif">
-            Book Your Candlelight Dinner or Birthday Surprise Today
+            Book Your Candlelight Dinner or Birthday Surprise in Surat Today
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Create unforgettable romantic memories at Surat's best private celebration venue. Perfect for anniversaries, proposals, date nights & special occasions.
