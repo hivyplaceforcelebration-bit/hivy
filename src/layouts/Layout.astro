@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/lib/ffc-config';
+import { LeadTracking } from '@/components/lead-tracking';
 import '@/styles/globals.css';
 
 interface Props {
@@ -141,6 +142,7 @@ const META_PIXEL = '1463182795375744';
 </head>
 <body class="min-h-screen bg-background text-foreground font-sans antialiased">
   <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <LeadTracking client:load />
   <slot />
 </body>
 </html>

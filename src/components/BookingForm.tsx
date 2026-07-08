@@ -1,4 +1,6 @@
 import { useState } from 'react';
+
+import { trackFormLead, trackWhatsAppLead } from '@/lib/lead-tracking';
 interface Props { phone: string; whatsapp: string; variant?: 'hero' | 'default'; }
 
 const occasions = ['Candlelight Dinner','Anniversary Celebration','Birthday Surprise','Marriage Proposal','Surprise Date','Pre-Wedding Shoot','Baby Moments',"Valentine's Week",'Other'];
@@ -10,7 +12,22 @@ export default function BookingForm({ phone, whatsapp, variant = 'default' }: Pr
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const text = encodeURIComponent(`Hi! I want to book a celebration at HIVY Surat.\n\nName: ${form.name}\nPhone: ${form.phone}\nOccasion: ${form.occasion}\nPreferred Date: ${form.date||'Flexible'}\n\nPlease confirm availability.`);
-    window.open(`https://wa.me/${whatsapp}?text=${text}`, '_blank', 'noopener,noreferrer');
+    const whatsappUrl = `https://wa.me/${whatsapp}?text=${text}`;
+
+    trackFormLead({
+      form_name: 'astro-booking-form',
+      form_variant: variant,
+      page_title: document.title,
+    });
+
+    trackWhatsAppLead({
+      form_name: 'astro-booking-form',
+      form_variant: variant,
+      destination: whatsappUrl,
+      page_title: document.title,
+    });
+
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     setSent(true);
   };
 
