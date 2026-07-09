@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/lib/ffc-config';
+import { AttributionCapture } from '@/components/attribution-capture';
 import { LeadTracking } from '@/components/lead-tracking';
 import '@/styles/globals.css';
 
@@ -152,6 +153,7 @@ const META_PIXEL = siteConfig.tracking.metaPixel;
 <body class="min-h-screen bg-background text-foreground font-sans antialiased">
   <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <LeadTracking client:load />
+  <AttributionCapture client:load />
   <slot />
 </body>
 </html>

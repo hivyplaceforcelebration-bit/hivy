@@ -1,3 +1,5 @@
+import { readStoredAttribution } from "@/lib/attribution";
+
 type LeadEventName = "generate_lead" | "whatsapp_click" | "phone_call_click";
 
 type LeadPayload = {
@@ -11,6 +13,18 @@ type LeadPayload = {
   page_location?: string;
   page_path?: string;
   site_name?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  gclid?: string;
+  gbraid?: string;
+  wbraid?: string;
+  fbclid?: string;
+  landing_page?: string;
+  landing_path?: string;
+  first_seen_at?: string;
 };
 
 declare global {
@@ -21,7 +35,10 @@ declare global {
 }
 
 function getBasePayload(payload: LeadPayload) {
+  const attribution = readStoredAttribution();
+
   return {
+    ...attribution,
     ...payload,
     site_name: payload.site_name ?? "hivy",
     page_title: payload.page_title ?? document.title,

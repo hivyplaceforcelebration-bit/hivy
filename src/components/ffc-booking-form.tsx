@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { getAttributionSummary, readStoredAttribution } from '@/lib/attribution';
 import { siteConfig, getVisiblePackages, packages } from '@/lib/ffc-config';
 import { trackFormLead, trackWhatsAppLead } from '@/lib/lead-tracking';
 
@@ -165,6 +166,12 @@ export function FFCBookingForm({ pageTitle, variant = 'default', packageName, de
     const whatsappMessage = generateWhatsAppMessage(data);
     const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${whatsappMessage}`;
     const selectedPkg = data.selectedPackage ? packages.find(p => p.slug === data.selectedPackage) : null;
+    const attribution = readStoredAttribution();
+    const attributionSummary = getAttributionSummary(attribution);
+    const notes = [
+      data.selectedPackage ? `Package: ${selectedPkg?.name || data.selectedPackage}` : null,
+      attributionSummary ? `Attribution: ${attributionSummary}` : null,
+    ].filter(Boolean).join('\n');
 
     trackFormLead({
       form_name: 'hivy-booking-form',
@@ -195,9 +202,7 @@ export function FFCBookingForm({ pageTitle, variant = 'default', packageName, de
         lead_source: window.location.hostname,
         source_domain: window.location.hostname,
         enquiry_channel: 'form',
-        notes: data.selectedPackage
-          ? `Package: ${selectedPkg?.name || data.selectedPackage}`
-          : undefined,
+        notes: notes || undefined,
       }),
     }).catch(() => {});
 
