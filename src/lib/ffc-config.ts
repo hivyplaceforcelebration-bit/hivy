@@ -65,6 +65,11 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/hivy_placeforcelebration/?hl=en",
     facebook: "https://www.facebook.com/p/Hivy-placeforcelebration-61553052747625/",
     youtube: ""
+  },
+  tracking: {
+    gtm: "GTM-PSXMHLQF",
+    ga4: "G-V3LHF624G7",
+    metaPixel: "1463182795375744",
   }
 };
 
@@ -1119,4 +1124,3 @@ export function getBlogsByCategory(category: string): BlogPost[] {
 
 // Explicit type re-exports for Vite/Rollup compatibility
 export type { SetupPackage, ServiceCategory, ServiceKeyword, AreaConfig, BlogPost };
-

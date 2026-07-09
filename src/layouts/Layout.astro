@@ -77,8 +77,9 @@ const faqPageSchema = faqSchema ? {
   "mainEntity": faqSchema.map(f => ({ "@type": "Question", "name": f.question, "acceptedAnswer": { "@type": "Answer", "text": f.answer } }))
 } : null;
 
-const GTM_ID = 'GTM-PSXMHLQF';
-const META_PIXEL = '1463182795375744';
+const GTM_ID = siteConfig.tracking.gtm;
+const GA4_ID = siteConfig.tracking.ga4;
+const META_PIXEL = siteConfig.tracking.metaPixel;
 ---
 
 <!DOCTYPE html>
@@ -129,6 +130,14 @@ const META_PIXEL = '1463182795375744';
     var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
     j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
     f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',GTM_ID);
+  </script>
+  <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+  <script define:vars={{ GA4_ID }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = window.gtag || gtag;
+    gtag('js', new Date());
+    gtag('config', GA4_ID);
   </script>
   <!-- Meta Pixel -->
   <script define:vars={{ META_PIXEL }}>

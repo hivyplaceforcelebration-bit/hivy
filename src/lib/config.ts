@@ -26,6 +26,7 @@ export const siteConfig = {
   },
   tracking: {
     gtm: "GTM-PSXMHLQF",
+    ga4: "G-V3LHF624G7",
     metaPixel: "1463182795375744",
     // NOTE: Google verification token needs to be different from FFC — get new token from GSC
     googleVerification: "TODO_HIVY_UNIQUE_TOKEN",
