@@ -39,6 +39,7 @@ declare global {
   interface Window {
     dataLayer: Array<Record<string, unknown>>;
     gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
@@ -79,6 +80,21 @@ function sendGoogleAdsConversion(sendTo: string) {
   });
 }
 
+function sendMetaStandardEvent(
+  eventName: "Lead" | "Contact",
+  payload: LeadPayload,
+) {
+  if (typeof window.fbq !== "function") return;
+
+  window.fbq("track", eventName, getBasePayload(payload));
+}
+
+function sendMetaCustomEvent(eventName: string, payload: LeadPayload) {
+  if (typeof window.fbq !== "function") return;
+
+  window.fbq("trackCustom", eventName, getBasePayload(payload));
+}
+
 function dispatchLeadEvents(events: LeadEventName[], payload: LeadPayload) {
   if (typeof window === "undefined") return;
 
@@ -94,30 +110,42 @@ export function trackLeadEvent(event: LeadEventName, payload: LeadPayload) {
 }
 
 export function trackFormLead(payload: Omit<LeadPayload, "lead_type">) {
-  dispatchLeadEvents(["generate_lead", "submit_lead_form"], {
+  const leadPayload = {
     ...payload,
     lead_type: "form_submit",
-  });
+  } satisfies LeadPayload;
+
+  dispatchLeadEvents(["generate_lead", "submit_lead_form"], leadPayload);
 
   sendGoogleAdsConversion(siteConfig.tracking.googleAds?.submitLeadForm ?? "");
+  sendMetaStandardEvent("Lead", leadPayload);
+  sendMetaCustomEvent("SubmitLeadForm", leadPayload);
 }
 
 export function trackWhatsAppLead(payload: Omit<LeadPayload, "lead_type">) {
-  dispatchLeadEvents(["whatsapp_click", "contact"], {
+  const leadPayload = {
     ...payload,
     lead_type: "whatsapp",
     contact_method: "whatsapp",
-  });
+  } satisfies LeadPayload;
+
+  dispatchLeadEvents(["whatsapp_click", "contact"], leadPayload);
 
   sendGoogleAdsConversion(siteConfig.tracking.googleAds?.whatsappLead ?? "");
+  sendMetaStandardEvent("Contact", leadPayload);
+  sendMetaCustomEvent("WhatsAppClick", leadPayload);
 }
 
 export function trackPhoneLead(payload: Omit<LeadPayload, "lead_type">) {
-  dispatchLeadEvents(["phone_call_click", "phone_call_lead", "contact"], {
+  const leadPayload = {
     ...payload,
     lead_type: "phone_call",
     contact_method: "phone",
-  });
+  } satisfies LeadPayload;
+
+  dispatchLeadEvents(["phone_call_click", "phone_call_lead", "contact"], leadPayload);
 
   sendGoogleAdsConversion(siteConfig.tracking.googleAds?.phoneLead ?? "");
+  sendMetaStandardEvent("Contact", leadPayload);
+  sendMetaCustomEvent("PhoneClick", leadPayload);
 }
