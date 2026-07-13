@@ -28,6 +28,12 @@ export const siteConfig = {
     gtm: "GTM-PSXMHLQF",
     ga4: "G-V3LHF624G7",
     metaPixel: "1463182795375744",
+    googleAds: {
+      accountId: "AW-11390931743",
+      submitLeadForm: "AW-11390931743/yeuWCMqK788cEJ-mz7cq",
+      whatsappLead: "",
+      phoneLead: "",
+    },
     // NOTE: Google verification token needs to be different from FFC — get new token from GSC
     googleVerification: "TODO_HIVY_UNIQUE_TOKEN",
   },

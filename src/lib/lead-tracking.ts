@@ -1,4 +1,5 @@
 import { readStoredAttribution } from "@/lib/attribution";
+import { siteConfig } from "@/lib/ffc-config";
 
 type LeadEventName =
   | "generate_lead"
@@ -68,6 +69,16 @@ function sendEventToGoogleTag(event: LeadEventName, payload: LeadPayload) {
   window.gtag("event", event, getBasePayload(payload));
 }
 
+function sendGoogleAdsConversion(sendTo: string) {
+  if (!sendTo || typeof window.gtag !== "function") return;
+
+  window.gtag("event", "conversion", {
+    send_to: sendTo,
+    value: 1.0,
+    currency: "INR",
+  });
+}
+
 function dispatchLeadEvents(events: LeadEventName[], payload: LeadPayload) {
   if (typeof window === "undefined") return;
 
@@ -87,6 +98,8 @@ export function trackFormLead(payload: Omit<LeadPayload, "lead_type">) {
     ...payload,
     lead_type: "form_submit",
   });
+
+  sendGoogleAdsConversion(siteConfig.tracking.googleAds?.submitLeadForm ?? "");
 }
 
 export function trackWhatsAppLead(payload: Omit<LeadPayload, "lead_type">) {
@@ -95,6 +108,8 @@ export function trackWhatsAppLead(payload: Omit<LeadPayload, "lead_type">) {
     lead_type: "whatsapp",
     contact_method: "whatsapp",
   });
+
+  sendGoogleAdsConversion(siteConfig.tracking.googleAds?.whatsappLead ?? "");
 }
 
 export function trackPhoneLead(payload: Omit<LeadPayload, "lead_type">) {
@@ -103,4 +118,6 @@ export function trackPhoneLead(payload: Omit<LeadPayload, "lead_type">) {
     lead_type: "phone_call",
     contact_method: "phone",
   });
+
+  sendGoogleAdsConversion(siteConfig.tracking.googleAds?.phoneLead ?? "");
 }
