@@ -1,9 +1,16 @@
 import { readStoredAttribution } from "@/lib/attribution";
 
-type LeadEventName = "generate_lead" | "whatsapp_click" | "phone_call_click";
+type LeadEventName =
+  | "generate_lead"
+  | "whatsapp_click"
+  | "phone_call_click"
+  | "submit_lead_form"
+  | "contact"
+  | "phone_call_lead";
 
 type LeadPayload = {
   lead_type: "form_submit" | "whatsapp" | "phone_call";
+  contact_method?: "whatsapp" | "phone";
   form_name?: string;
   form_variant?: string;
   destination?: string;
@@ -55,35 +62,45 @@ function pushDataLayerEvent(event: LeadEventName, payload: LeadPayload) {
   });
 }
 
-export function trackLeadEvent(event: LeadEventName, payload: LeadPayload) {
+function sendEventToGoogleTag(event: LeadEventName, payload: LeadPayload) {
+  if (typeof window.gtag !== "function") return;
+
+  window.gtag("event", event, getBasePayload(payload));
+}
+
+function dispatchLeadEvents(events: LeadEventName[], payload: LeadPayload) {
   if (typeof window === "undefined") return;
 
-  const eventPayload = getBasePayload(payload);
-
-  pushDataLayerEvent(event, payload);
-
-  if (typeof window.gtag === "function") {
-    window.gtag("event", event, eventPayload);
+  for (const event of events) {
+    pushDataLayerEvent(event, payload);
+    sendEventToGoogleTag(event, payload);
   }
 }
 
+export function trackLeadEvent(event: LeadEventName, payload: LeadPayload) {
+  if (typeof window === "undefined") return;
+  dispatchLeadEvents([event], payload);
+}
+
 export function trackFormLead(payload: Omit<LeadPayload, "lead_type">) {
-  trackLeadEvent("generate_lead", {
+  dispatchLeadEvents(["generate_lead", "submit_lead_form"], {
     ...payload,
     lead_type: "form_submit",
   });
 }
 
 export function trackWhatsAppLead(payload: Omit<LeadPayload, "lead_type">) {
-  trackLeadEvent("whatsapp_click", {
+  dispatchLeadEvents(["whatsapp_click", "contact"], {
     ...payload,
     lead_type: "whatsapp",
+    contact_method: "whatsapp",
   });
 }
 
 export function trackPhoneLead(payload: Omit<LeadPayload, "lead_type">) {
-  trackLeadEvent("phone_call_click", {
+  dispatchLeadEvents(["phone_call_click", "phone_call_lead", "contact"], {
     ...payload,
     lead_type: "phone_call",
+    contact_method: "phone",
   });
 }
