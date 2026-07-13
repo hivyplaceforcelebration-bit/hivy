@@ -73,8 +73,8 @@ export const siteConfig = {
     googleAds: {
       accountId: "AW-11390931743",
       submitLeadForm: "AW-11390931743/yeuWCMqK788cEJ-mz7cq",
-      whatsappLead: "",
-      phoneLead: "",
+      whatsappLead: "AW-11390931743/UKE_CN_28c8cEJ-mz7cq",
+      phoneLead: "AW-11390931743/BQpiCNz28c8cEJ-mz7cq",
     },
   }
 };

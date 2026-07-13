@@ -31,8 +31,8 @@ export const siteConfig = {
     googleAds: {
       accountId: "AW-11390931743",
       submitLeadForm: "AW-11390931743/yeuWCMqK788cEJ-mz7cq",
-      whatsappLead: "",
-      phoneLead: "",
+      whatsappLead: "AW-11390931743/UKE_CN_28c8cEJ-mz7cq",
+      phoneLead: "AW-11390931743/BQpiCNz28c8cEJ-mz7cq",
     },
     // NOTE: Google verification token needs to be different from FFC — get new token from GSC
     googleVerification: "TODO_HIVY_UNIQUE_TOKEN",
