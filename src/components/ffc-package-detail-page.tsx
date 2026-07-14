@@ -362,7 +362,7 @@ export default function FFCPackageDetailPage({ package: pkg }: PackageDetailPage
             </div>
 
             {/* Cake & Champagne */}
-            <div className="mt-6 md:mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="mt-6 md:mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className={`rounded-xl p-4 md:p-6 text-center ${pkg.cakeIncluded ? 'bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-200' : 'bg-gradient-to-br from-stone-200 to-stone-100'}`}>
                 <h4 className={`font-bold text-lg md:text-xl mb-2 ${pkg.cakeIncluded ? 'text-green-800' : 'text-stone-900'}`}>🎂 Cake & Champagne</h4>
                 {pkg.cakeIncluded ? (
@@ -380,6 +380,10 @@ export default function FFCPackageDetailPage({ package: pkg }: PackageDetailPage
               <div className="bg-gradient-to-br from-stone-200 to-stone-100 rounded-xl p-4 md:p-6 text-center">
                 <h4 className="font-bold text-lg md:text-xl text-stone-900 mb-2">⏰ 3 Mesmerizing Hours</h4>
                 <p className="text-gray-700 text-sm md:text-base">Three magical hours designed to create unforgettable memories</p>
+              </div>
+              <div className="bg-gradient-to-br from-stone-200 to-stone-100 rounded-xl p-4 md:p-6 text-center">
+                <h4 className="font-bold text-lg md:text-xl text-stone-900 mb-2">🎥 Photography / Reel Video</h4>
+                <p className="text-gray-700 text-sm md:text-base"><strong>₹2500/-</strong> add-on available in every package</p>
               </div>
             </div>
           </div>

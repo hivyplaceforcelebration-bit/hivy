@@ -94,7 +94,7 @@ Experience the ultimate romantic celebration at Surat's best candlelight dinner 
 🎂 Cake / Champagne / Photography
 • Cake: Complimentary
 • Champagne: ₹500/- (Non-Alcoholic Fruit Flavor)
-• Book Photography: ₹2700/-
+• Book Photography: ₹2500/-
   - 10 to 15 Photos
   - 30 to 45 seconds Reel
   - Same day delivery of all pictures and video after your date complete
@@ -136,7 +136,7 @@ Romantic Proposal Surat | Anniversary Celebration | Birthday Surprise | Candleli
       "3 Hours Private Romantic Tent Celebration ⛺",
       "Complimentary Celebration Cake 🍰",
       "Champagne: ₹500/- (Non-Alcoholic)",
-      "Photography Package Available: ₹2700/-",
+      "Photography Package Available: ₹2500/-",
       "7kg Real Rose Petals Floor Decoration 🌹",
       "Trending Tent Setup with Curtains & Lights 💡",
       "Unique Vintage Props & Bohemian Décor",

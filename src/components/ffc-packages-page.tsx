@@ -20,7 +20,7 @@ const packagesFaqs = [
   { question: "How long is each package booking?", answer: "All packages include 3 hours of exclusive venue access. Extended time can be arranged based on availability for an additional charge." },
   { question: "What's included in the dining experience?", answer: "Each package includes a full dinner menu: mojito welcome drink, cheese fondue, paneer tortilla, peri peri fries with mac & cheese, tangy loaf, unlimited cold drinks, dessert with chocolate bite, and mineral water. Dietary requirements can be accommodated." },
   { question: "Which package is best for anniversaries?", answer: "All packages work beautifully for anniversaries. Tent of Romance offers intimacy, BoHo Chic provides warm ambiance, and Swing of LOVE creates a playful romantic atmosphere." },
-  { question: "Is photography included in packages?", answer: "Photography is available as an add-on for ₹2700, including 10-15 edited photos and a 30-45 second reel with same-day delivery." },
+  { question: "Is photography included in packages?", answer: "Photography is available as an add-on for ₹2500, including 10-15 edited photos and a 30-45 second reel with same-day delivery." },
   { question: "How do I choose between packages?", answer: "Consider your occasion, aesthetic preferences, and budget. Our team is happy to share photos and videos of each setup to help you decide. Contact us on WhatsApp for personalized recommendations." },
   { question: "Can I book any package for a birthday celebration?", answer: "Yes! All packages are perfect for birthdays. We customize decorations with birthday balloons, personalized messages, and birthday-specific touches for any package you choose." }
 ];
