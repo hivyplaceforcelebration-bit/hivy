@@ -51,17 +51,17 @@ export default function FFCPackageDetailPage({ package: pkg }: PackageDetailPage
     "@graph": [
       {
         "@type": "Product",
-        "@id": `https://hivy.co.in/packages/${pkg.slug}#product`,
+        "@id": `https://www.hivy.co.in/packages/${pkg.slug}#product`,
         "name": `${pkg.name} - Romantic Celebration Package`,
         "description": pkg.shortDescription,
-        "image": pkg.images.map((img: string) => `https://hivy.co.in${img}`),
+        "image": pkg.images.map((img: string) => `https://www.hivy.co.in${img}`),
         "brand": {
           "@type": "Brand",
           "name": "HIVY - Place for Celebrations"
         },
         "offers": {
           "@type": "Offer",
-          "url": `https://hivy.co.in/packages/${pkg.slug}`,
+          "url": `https://www.hivy.co.in/packages/${pkg.slug}`,
           "priceCurrency": "INR",
           "price": pkg.price,
           "availability": "https://schema.org/InStock",
@@ -86,19 +86,19 @@ export default function FFCPackageDetailPage({ package: pkg }: PackageDetailPage
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://hivy.co.in"
+            "item": "https://www.hivy.co.in"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Packages",
-            "item": "https://hivy.co.in/packages"
+            "item": "https://www.hivy.co.in/packages"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": pkg.name,
-            "item": `https://hivy.co.in/packages/${pkg.slug}`
+            "item": `https://www.hivy.co.in/packages/${pkg.slug}`
           }
         ]
       },

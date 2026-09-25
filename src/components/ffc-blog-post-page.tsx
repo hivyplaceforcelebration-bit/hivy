@@ -31,28 +31,28 @@ export default function FFCBlogPostPage({ post }: FFCBlogPostPageProps) {
     "@graph": [
       {
         "@type": "Article",
-        "@id": `https://hivy.co.in/blog/${post.slug}#article`,
+        "@id": `https://www.hivy.co.in/blog/${post.slug}#article`,
         "headline": post.title,
         "description": post.metaDescription,
-        "image": `https://hivy.co.in${post.coverImage}`,
+        "image": `https://www.hivy.co.in${post.coverImage}`,
         "datePublished": post.publishedAt,
         "dateModified": post.publishedAt,
         "author": {
           "@type": "Organization",
           "name": "HIVY - Place for Celebrations",
-          "url": "https://hivy.co.in"
+          "url": "https://www.hivy.co.in"
         },
         "publisher": {
           "@type": "Organization",
           "name": "HIVY - Place for Celebrations",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://hivy.co.in/icon.svg"
+            "url": "https://www.hivy.co.in/icon.svg"
           }
         },
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": `https://hivy.co.in/blog/${post.slug}`
+          "@id": `https://www.hivy.co.in/blog/${post.slug}`
         },
         "keywords": post.tags.join(", "),
         "articleSection": post.category
@@ -64,19 +64,19 @@ export default function FFCBlogPostPage({ post }: FFCBlogPostPageProps) {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://hivy.co.in"
+            "item": "https://www.hivy.co.in"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Blog",
-            "item": "https://hivy.co.in/blog"
+            "item": "https://www.hivy.co.in/blog"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": post.title,
-            "item": `https://hivy.co.in/blog/${post.slug}`
+            "item": `https://www.hivy.co.in/blog/${post.slug}`
           }
         ]
       }

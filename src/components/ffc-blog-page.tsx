@@ -51,7 +51,7 @@ export default function FFCBlogPage() {
         "@type": "CollectionPage",
         "name": "HIVY Blog - Celebration Ideas & Inspiration",
         "description": "Tips, guides, and romantic celebration ideas for couples in Surat",
-        "url": "https://hivy.co.in/blog",
+        "url": "https://www.hivy.co.in/blog",
         "publisher": {
           "@type": "Organization",
           "name": "HIVY - Place for Celebrations"
@@ -66,8 +66,8 @@ export default function FFCBlogPage() {
             "@type": "BlogPosting",
             "headline": post.title,
             "description": post.excerpt,
-            "url": `https://hivy.co.in/blog/${post.slug}`,
-            "image": `https://hivy.co.in${post.coverImage}`,
+            "url": `https://www.hivy.co.in/blog/${post.slug}`,
+            "image": `https://www.hivy.co.in${post.coverImage}`,
             "datePublished": post.publishedAt
           }
         }))
@@ -79,13 +79,13 @@ export default function FFCBlogPage() {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://hivy.co.in"
+            "item": "https://www.hivy.co.in"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Blog",
-            "item": "https://hivy.co.in/blog"
+            "item": "https://www.hivy.co.in/blog"
           }
         ]
       }

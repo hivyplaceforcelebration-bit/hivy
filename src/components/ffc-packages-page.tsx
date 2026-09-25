@@ -44,8 +44,8 @@ export default function FFCPackagesPage() {
             "@type": "Product",
             "name": pkg.name,
             "description": pkg.shortDescription,
-            "url": `https://hivy.co.in/packages/${pkg.slug}`,
-            "image": `https://hivy.co.in${pkg.thumbnail}`,
+            "url": `https://www.hivy.co.in/packages/${pkg.slug}`,
+            "image": `https://www.hivy.co.in${pkg.thumbnail}`,
             "offers": {
               "@type": "Offer",
               "priceCurrency": "INR",
@@ -62,13 +62,13 @@ export default function FFCPackagesPage() {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://hivy.co.in"
+            "item": "https://www.hivy.co.in"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Packages",
-            "item": "https://hivy.co.in/packages"
+            "item": "https://www.hivy.co.in/packages"
           }
         ]
       }

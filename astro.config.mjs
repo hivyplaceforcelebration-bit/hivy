@@ -3,7 +3,7 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://hivy.co.in',
+  site: 'https://www.hivy.co.in',
   output: 'static',
   integrations: [
     react(),

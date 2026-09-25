@@ -32,10 +32,10 @@ export default function FFCAreaPage({ area }: AreaPageProps) {
     "@graph": [
       {
         "@type": "LocalBusiness",
-        "@id": `https://hivy.co.in/${area.slug}#business`,
+        "@id": `https://www.hivy.co.in/${area.slug}#business`,
         "name": `HIVY - Place for Celebrations - ${area.name}`,
         "description": `Premium romantic celebration venue serving ${area.name}, Surat. Birthday surprises, candlelight dinners, anniversary celebrations, proposals & more.`,
-        "url": `https://hivy.co.in/${area.slug}`,
+        "url": `https://www.hivy.co.in/${area.slug}`,
         "telephone": "+91 9727027278",
         "priceRange": "₹₹₹",
         "address": {
@@ -69,19 +69,19 @@ export default function FFCAreaPage({ area }: AreaPageProps) {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://hivy.co.in"
+            "item": "https://www.hivy.co.in"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Areas",
-            "item": "https://hivy.co.in/#areas"
+            "item": "https://www.hivy.co.in/#areas"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": area.name,
-            "item": `https://hivy.co.in/${area.slug}`
+            "item": `https://www.hivy.co.in/${area.slug}`
           }
         ]
       },

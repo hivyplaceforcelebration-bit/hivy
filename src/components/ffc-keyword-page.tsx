@@ -37,7 +37,7 @@ export default function FFCKeywordPage({ service, keyword }: KeywordPageProps) {
     "@graph": [
       {
         "@type": "Service",
-        "@id": `https://hivy.co.in/${keyword.slug}#service`,
+        "@id": `https://www.hivy.co.in/${keyword.slug}#service`,
         "name": keyword.title,
         "description": keyword.metaDescription,
         "provider": {
@@ -66,19 +66,19 @@ export default function FFCKeywordPage({ service, keyword }: KeywordPageProps) {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://hivy.co.in"
+            "item": "https://www.hivy.co.in"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": service.name,
-            "item": `https://hivy.co.in/services/${service.slug}`
+            "item": `https://www.hivy.co.in/services/${service.slug}`
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": keyword.title,
-            "item": `https://hivy.co.in/${keyword.slug}`
+            "item": `https://www.hivy.co.in/${keyword.slug}`
           }
         ]
       },

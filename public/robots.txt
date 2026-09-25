@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /_astro/
-Sitemap: https://hivy.co.in/sitemap-index.xml
+Sitemap: https://www.hivy.co.in/sitemap-index.xml

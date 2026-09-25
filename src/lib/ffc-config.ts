@@ -50,7 +50,7 @@ export const siteConfig = {
   email: "hello@hivy.co.in",
   address: "252/253, 2nd Floor, The Boulevard, Near Pratham Circle, Galleria Street, Green City Road, Adajan, Pal Gam, Surat, Gujarat 394510",
   city: "Surat",
-  website: "https://hivy.co.in",
+  website: "https://www.hivy.co.in",
   colors: {
     primary: "#92400E", // Rich Amber Brown
     secondary: "#D97706", // Vibrant Amber

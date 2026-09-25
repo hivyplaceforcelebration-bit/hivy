@@ -3,7 +3,7 @@
 // ============================================================================
 
 export const SEO_CONFIG = {
-  siteUrl: "https://hivy.co.in",
+  siteUrl: "https://www.hivy.co.in",
   siteName: "HIVY - Place for Celebrations",
   niche: "Romantic Celebration Venue",
   location: "Surat",

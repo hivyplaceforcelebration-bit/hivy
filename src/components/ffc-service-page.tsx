@@ -355,14 +355,14 @@ export default function FFCServicePage({ service }: ServicePageProps) {
               "position": 1,
               "name": "Choose Your Package",
               "text": `Browse HIVY's celebration packages starting from ₹5,100 to ₹6,500. Select a package that matches your ${service.name.toLowerCase()} needs — Swing of Love, Elite Group Setup, BoHo Chic, Fairy Tale Proposals, or Tent of Romance.`,
-              "url": "https://hivy.co.in/packages"
+              "url": "https://www.hivy.co.in/packages"
             },
             {
               "@type": "HowToStep",
               "position": 2,
               "name": "Contact HIVY to Book",
               "text": "WhatsApp or call +91 9727027278 with your preferred date, time slot, and package choice. Our team responds within 30 minutes during operating hours (11 AM – 11 PM).",
-              "url": "https://hivy.co.in/contact"
+              "url": "https://www.hivy.co.in/contact"
             },
             {
               "@type": "HowToStep",

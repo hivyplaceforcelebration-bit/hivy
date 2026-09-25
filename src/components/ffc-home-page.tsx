@@ -354,14 +354,14 @@ export default function FFCHomePage() {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "HIVY - Place for Celebrations | Best Romantic Venue in Surat",
-    "url": "https://hivy.co.in",
+    "url": "https://www.hivy.co.in",
     "speakable": {
       "@type": "SpeakableSpecification",
       "cssSelector": [".hero-description", ".faq-section", ".services-heading"]
     },
     "mainEntity": {
       "@type": "LocalBusiness",
-      "@id": "https://hivy.co.in/#business"
+      "@id": "https://www.hivy.co.in/#business"
     }
   };
 

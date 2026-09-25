@@ -13,7 +13,7 @@ export const siteConfig = {
   address:
     "252/253, 2nd Floor, The Boulevard, Near Pratham Circle, Galleria Street, Green City Road, Adajan, Pal Gam, Surat - 394510",
   city: "Surat",
-  website: "https://hivy.co.in",
+  website: "https://www.hivy.co.in",
   googleMapsUrl: "https://maps.app.goo.gl/hivy-surat",
   googleReviewUrl: "https://g.page/r/hivy-surat/review",
   rating: "4.9",
