@@ -417,7 +417,7 @@ export default function FFCHomePage() {
         </div>
         
         <div className="container mx-auto px-4 py-10 md:py-28 relative">
-          {/* MOBILE LAYOUT: Compact hero without form */}
+          {/* MOBILE LAYOUT: Form-first, compact hero */}
           <div className="lg:hidden">
             {/* Compact Hero Text for Mobile */}
             <div className="text-center mb-5">
@@ -440,6 +440,11 @@ export default function FFCHomePage() {
               </div>
             </div>
 
+            {/* Booking Form Immediately Visible on Mobile */}
+            <div>
+              <FFCBookingForm variant="hero" />
+            </div>
+
             {/* Quick Action Buttons */}
             <div className="flex gap-3 mt-4">
               <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex-1">
@@ -457,46 +462,53 @@ export default function FFCHomePage() {
             </div>
           </div>
 
-          {/* DESKTOP LAYOUT: Centered layout without form */}
-          <div className="hidden lg:flex flex-col items-center text-center max-w-4xl mx-auto">
-            <Badge className="mb-6 bg-white/20 text-white border-white/30 text-sm px-4 py-1">
-              <Sparkles className="h-4 w-4 mr-2" /> Couples Only Experience in Surat
-            </Badge>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight font-serif">
-              HIVY Surat - Place for Celebrations
-            </h1>
-            <p className="text-xl md:text-2xl mb-4 text-white/90">
-              {siteConfig.tagline}
-            </p>
-            <p className="text-lg mb-8 text-white/80 max-w-2xl">
-              Surat's premier venue for romantic candlelight dinners, birthday surprises, anniversary celebrations, marriage proposals & intimate date nights. 100% private, couples-only experience.
-            </p>
-            
-            <div className="flex flex-row gap-4 justify-center">
-              <a href="/packages">
-                <Button size="lg" className="bg-white text-amber-800 hover:bg-amber-50 text-lg px-8 py-6">
-                  <Gift className="h-5 w-5 mr-2" />
-                  View Packages
-                </Button>
-              </a>
-              <a href={`tel:${siteConfig.phone}`}>
-                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-6">
-                  <Phone className="h-5 w-5 mr-2" />
-                  {siteConfig.phone}
-                </Button>
-              </a>
+          {/* DESKTOP LAYOUT: Side-by-side text + form */}
+          <div className="hidden lg:grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-left">
+              <Badge className="mb-6 bg-white/20 text-white border-white/30 text-sm px-4 py-1">
+                <Sparkles className="h-4 w-4 mr-2" /> Couples Only Experience in Surat
+              </Badge>
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight font-serif">
+                HIVY Surat - Place for Celebrations
+              </h1>
+              <p className="text-xl md:text-2xl mb-4 text-white/90 max-w-2xl">
+                {siteConfig.tagline}
+              </p>
+              <p className="text-lg mb-8 text-white/80 max-w-xl">
+                Surat's premier venue for romantic candlelight dinners, birthday surprises, anniversary celebrations, marriage proposals & intimate date nights. 100% private, couples-only experience.
+              </p>
+
+              <div className="flex flex-row gap-4">
+                <a href="/packages">
+                  <Button size="lg" className="bg-white text-amber-800 hover:bg-amber-50 text-lg px-8 py-6">
+                    <Gift className="h-5 w-5 mr-2" />
+                    View Packages
+                  </Button>
+                </a>
+                <a href={`tel:${siteConfig.phone}`}>
+                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-6">
+                    <Phone className="h-5 w-5 mr-2" />
+                    {siteConfig.phone}
+                  </Button>
+                </a>
+              </div>
+
+              <div className="mt-10 flex flex-wrap gap-4 text-base">
+                <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+                  <Shield className="h-4 w-4" /> 100% Private
+                </span>
+                <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+                  <Star className="h-4 w-4" /> 4.9★ Rated
+                </span>
+                <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+                  <Users className="h-4 w-4" /> 3000+ Couples
+                </span>
+              </div>
             </div>
-            
-            <div className="mt-10 flex flex-wrap gap-6 text-base justify-center">
-              <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
-                <Shield className="h-4 w-4" /> 100% Private
-              </span>
-              <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
-                <Star className="h-4 w-4" /> 4.9★ Rated
-              </span>
-              <span className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
-                <Users className="h-4 w-4" /> 3000+ Couples
-              </span>
+
+            {/* Hero Booking Form - Desktop */}
+            <div>
+              <FFCBookingForm variant="hero" />
             </div>
           </div>
         </div>
