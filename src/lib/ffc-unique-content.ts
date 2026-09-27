@@ -1003,8 +1003,6 @@ Whatever your reason for choosing the ${pkg.name}, our team ensures the experien
 
 **Advance Booking**: We recommend booking 3-5 days ahead for weekdays and 7-10 days for weekends. Holiday seasons and Valentine's Week require earlier booking.
 
-**Payment**: A partial advance payment confirms your ${pkg.name} booking. The remaining balance is due before your celebration begins.
-
 **Customisation**: Want to add personal touches? Share your preferences — colour themes, special messages, specific songs, dietary requirements — and our team will accommodate them.
 
 **Cancellation**: Rescheduling is available up to one day before your slot, subject to availability within one month. No refund policy applies.
