@@ -190,7 +190,7 @@ export function FFCBookingForm({ pageTitle, variant = 'default', packageName, de
     
     window.open(whatsappUrl, '_blank');
 
-    fetch('https://crm.bookmymoment.in/api/leads/submit', {
+    fetch('https://crm.friendsfactorycafe.com/api/leads/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
