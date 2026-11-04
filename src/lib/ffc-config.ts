@@ -68,7 +68,7 @@ export const siteConfig = {
   },
   tracking: {
     gtm: "GTM-PSXMHLQF",
-    ga4: "G-V3LHF624G7",
+    ga4: "G-G4YP6NCRCH",
     metaPixel: "1463182795375744",
     googleAds: {
       accountId: "AW-11390931743",
